@@ -1,0 +1,61 @@
+# ---- Python ----
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# ---- Secrets / credentials ----
+.env
+.env.*
+*.key
+secrets.*
+
+# ---- Large data artifacts (NOT committed) ----
+# Raw corpus dumps and intermediate scrape output — too big for git.
+# The committed deliverables are data/DATA.md, data/train.jsonl, data/heldout.jsonl,
+# and corpus-statistics files — those are force-kept via the un-ignore rules below.
+data/raw/
+data/corpus/
+data/**/*.txt
+data/**/*.jsonl.gz
+*.parquet
+
+# ---- Vector index / embeddings (rebuildable, large binaries) ----
+rag/index/
+*.faiss
+*.index
+*.npy
+embeddings/
+
+# ---- Model checkpoints / adapters (live on HF Hub, not git) ----
+train/checkpoints/
+train/outputs/
+*.safetensors
+*.bin
+*.gguf
+adapter_model*/
+
+# ---- Modal / caches ----
+.modal/
+.cache/
+
+# ---- Site (Next.js/Vercel) ----
+site/node_modules/
+site/.next/
+site/out/
+site/.vercel/
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ---- Keep these deliverables even though patterns above are broad ----
+!data/DATA.md
+!data/train.jsonl
+!data/heldout.jsonl
+!data/*stats*

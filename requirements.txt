@@ -1,0 +1,26 @@
+# Local environment (corpus, dataset, retriever, eval, stats).
+# Heavy training deps (torch, peft, bitsandbytes, transformers) live in the Modal
+# image for Phase 3, not necessarily installed locally.
+
+# --- corpus collection & cleaning (Phase 1) ---
+requests==2.32.3
+mwparserfromhell==0.6.6        # parse Yugipedia wikitext -> clean prose
+beautifulsoup4==4.12.3
+tqdm==4.66.5
+
+# --- dataset generation & gating (Phase 2) / teacher+judge (Phase 5) ---
+google-genai==0.8.0            # Gemini flash-lite teacher/judge client
+datasets==3.0.1
+
+# --- retriever (Phase 4) ---
+sentence-transformers==3.1.1   # BAAI/bge-small-en-v1.5
+faiss-cpu==1.8.0.post1
+
+# --- endpoints (Phase 3/4) ---
+modal==0.64.0                  # training + scale-to-zero serving
+fastapi==0.115.0
+
+# --- stats & plots (Phase 3/5) ---
+numpy==2.1.1
+scipy==1.14.1                  # paired t-test, Wilcoxon
+matplotlib==3.9.2              # loss curves, the one plot
