@@ -1,0 +1,58 @@
+[
+  {
+    "method": "bm25-only",
+    "covered": 54,
+    "recall@1": 0.519,
+    "recall@3": 0.759,
+    "recall@5": 0.815,
+    "recall@10": 0.852
+  },
+  {
+    "method": "dense[bge-small-en-v1.5]",
+    "covered": 54,
+    "recall@1": 0.352,
+    "recall@3": 0.648,
+    "recall@5": 0.741,
+    "recall@10": 0.852
+  },
+  {
+    "method": "hybrid[bge-small-en-v1.5+bm25]",
+    "covered": 54,
+    "recall@1": 0.537,
+    "recall@3": 0.759,
+    "recall@5": 0.833,
+    "recall@10": 0.87
+  },
+  {
+    "method": "dense[minilm-l6]",
+    "covered": 54,
+    "recall@1": 0.519,
+    "recall@3": 0.796,
+    "recall@5": 0.833,
+    "recall@10": 0.87
+  },
+  {
+    "method": "hybrid[minilm-l6+bm25]",
+    "covered": 54,
+    "recall@1": 0.574,
+    "recall@3": 0.815,
+    "recall@5": 0.87,
+    "recall@10": 0.907
+  },
+  {
+    "method": "dense[e5-small-v2]",
+    "covered": 54,
+    "recall@1": 0.426,
+    "recall@3": 0.667,
+    "recall@5": 0.796,
+    "recall@10": 0.87
+  },
+  {
+    "method": "hybrid[e5-small-v2+bm25]",
+    "covered": 54,
+    "recall@1": 0.481,
+    "recall@3": 0.778,
+    "recall@5": 0.833,
+    "recall@10": 0.87
+  }
+]
