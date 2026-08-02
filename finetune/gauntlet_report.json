@@ -1,0 +1,24 @@
+{
+  "raw": 2796,
+  "after_G1_format": 2796,
+  "after_G2_judge": 2708,
+  "G2_verdicts": {
+    "yes": 2700,
+    "no": 81,
+    "partial": 15
+  },
+  "after_G3_dedup": 2683,
+  "after_G4_decontam": 2683,
+  "G5_qtype": {
+    "interaction": 1762,
+    "timing": 508,
+    "definition": 224,
+    "other": 119,
+    "lore": 70
+  },
+  "G5_difficulty": {
+    "lookup": 1206,
+    "multistep": 1477
+  },
+  "FINAL_train_pairs": 2683
+}
