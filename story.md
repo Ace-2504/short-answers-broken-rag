@@ -228,6 +228,45 @@ Shrink+Black Garden interaction); held-out items have verbatim evidence. Total a
 low, because flash-lite produces high-quality grounded pairs and the judge confirms 96.6% while
 still catching the real errors. → *Better: SFT set + held-out set built and validated.*
 
+**E30 · Phase 3 planned + prereqs verified.** Verified all Phase-3 infra is ready: Modal profile
+`ace-2504`, Modal `hf-token` secret present, HF `Ace-2504` (write), **Gemma 2 2B gated access OK**
+(downloaded config.json), train/heldout data present, budget fine. Only gap = the training script
+(not built). Wrote `docs/finetune-training.md`: one QLoRA closed-book QA fine-tune = System B (System
+C = same model + retrieval at inference); proposed config (r16/α32, all-linear targets, LR 2e-4,
+3 epochs, seq 512, bf16, L4), train/val 2% split (separate from the 60-item test set), fold system
+into user turn, push adapter to HF Hub, scale-to-zero endpoint + the adapter-race trap noted.
+Not built yet. → *Better: Phase 3 fully specced, infra green.*
+
+**E31 · Phase 3 first QLoRA run — trained but overfit; re-running with early-stop.** Built
+`train/modal_finetune_gemma.py` (Gemma-2-2b-it, QLoRA r16/α32, all-linear, LR 2e-4, seq 512, L4,
+completion-only loss, Gemma system-fold). Two quick fixes on first launches: Modal 1.5.3 removed
+`Mount` → switched to `image.add_local_file`; trl 0.9.6 needed `rich` → added. Run then succeeded:
+train 2630 / val 53, adapter pushed to `Ace-2504/gemma-2-2b-yugioh-qa`, loss curve saved. **But the
+data revealed overfitting:** val loss bottomed ~1.35 (≈epoch 1) then rose to 1.69 by epoch 3
+(reported val ppl 5.407 = the over-trained endpoint; best point ≈ **ppl 3.86**, which would beat the
+4.26 reference). Made the documented call to **re-run with `load_best_model_at_end` + early stopping
+(patience 3)** so we push the best checkpoint, not the overfit one. → *Worse then better: 3 epochs
+overfit the 2.6k-pair set; early-stop keeps the true minimum.*
+
+**E32 · Phase 3 training COMPLETE (best checkpoint).** Early-stop re-run landed the best model at
+~epoch 0.9: **val perplexity 3.872** (eval_loss 1.354) — **beats the 4.26 reference**. Early stopping
+confirmed the overfitting diagnosis (no val improvement after epoch 0.9 → stopped, loaded best). Best
+adapter pushed to `Ace-2504/gemma-2-2b-yugioh-qa`; loss curve at `train/loss_curve.png` (sent to
+Harman). Drafted a proper model card at `train/MODEL_CARD.md` (NOT auto-pushed — modifying the public
+HF repo needs Harman's OK). Both L4 runs ≈ $0.60. → *Better: System B trained, beats the reference,
+non-overfit.*
+
+**E33 · Model card pushed + local serving live via cloudflared.** Pushed `train/MODEL_CARD.md` →
+`README.md` on the HF repo (Harman authorized). Wrote `train/serve_local.py` (FastAPI: Gemma-2-2b-it
++ adapter, 4-bit on the RTX 3060, `/generate` with optional `context` for System C later). Fixes en
+route: installed CUDA torch (2.5.1+cu121) — the venv had CPU torch; `peft` missing locally →
+installed; transformers 5.x `apply_chat_template` now returns a dict → fixed the generate call.
+Server live on port 8100 (`device cuda:0`), exposed publicly via a cloudflared quick tunnel
+(**https://advice-arrivals-closure-murphy.trycloudflare.com** — ephemeral, changes on restart).
+Verified end-to-end: closed-book answers are coherent but imperfect on specifics (e.g. Raye's GY
+effect) — exactly the System-B gap retrieval (System C) is meant to fix. → *Better: fine-tune is
+served and publicly reachable.*
+
 ## Current status (as of last entry)
 
 - **Corpus collected:** Yugipedia prose 21.43 MB (11,944 pages) + card-facts 6.04 MB (14,477 cards)
@@ -238,7 +277,13 @@ still catching the real errors. → *Better: SFT set + held-out set built and va
 - **Phase 1 COMPLETE** (E23): `corpus_clean.jsonl` = 26,388 docs; free-prose clears the 20 MB floor.
 - **Phase 2 COMPLETE** (E29): `data/train.jsonl` = 2,683 pairs, `data/heldout.jsonl` = 60; funnel in
   DATA.md; both floors cleared.
-- **Next step:** Phase 3 — QLoRA fine-tune of `google/gemma-2-2b-it` on Modal (L4/A100), loss curves,
-  val perplexity, push to HF Hub, serve behind a scale-to-zero endpoint.
+- **Phase 3 training COMPLETE** (E32): `Ace-2504/gemma-2-2b-yugioh-qa` adapter on HF Hub, val
+  perplexity **3.872** (beats 4.26 ref), loss curve saved. This adapter = System B (System C = it +
+  retrieval).
+- **Phase 3 COMPLETE** (E33): adapter + model card on HF; served locally on the 3060 via
+  `train/serve_local.py` + cloudflared tunnel. (A durable scale-to-zero Modal endpoint can replace
+  the ephemeral tunnel later for the site.)
+- **Next major step:** Phase 4 — build the retriever (FAISS hybrid MiniLM-L6 + BM25 over the corpus),
+  `/retrieve` endpoint, recall@k table; then Phase 5 eval (A/B/C, paired bootstrap judge).
 - **Not yet started:** Phase 2 (QA generation + VALIDATE gauntlet), Phase 3 (QLoRA fine-tune),
   Phase 4 (retriever build + recall@k), Phase 5 (eval), Phase 6 (site + report).
