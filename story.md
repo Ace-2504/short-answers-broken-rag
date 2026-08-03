@@ -267,6 +267,24 @@ Verified end-to-end: closed-book answers are coherent but imperfect on specifics
 effect) — exactly the System-B gap retrieval (System C) is meant to fix. → *Better: fine-tune is
 served and publicly reachable.*
 
+**E34 · Phase 4 retriever test planned.** Wrote `docs/retriever-test.md` (same pattern as the
+chunking study + QA pilot): build the real retriever over the full 26,388-doc corpus (chunk 1000/150
+title-aug → MiniLM-L6 FAISS flat + BM25 hybrid) and measure **recall@k on the 60 real held-out items**
+(dense/BM25/hybrid, k=1/3/5/10). Purpose: re-confirm the chunking-study config (chosen on a 0.32 MB
+proxy) at full scale and produce the required recall@k table — the precondition for System C
+("measure recall before blaming the model"). Defined the 7 exact outputs + limitations. Not executed.
+→ *Better: Phase 4 de-risked/specced before build.*
+
+**E35 · Phase 4 retriever built + recall@k measured — System C viable.** Built `rag/build_index.py`
+(full corpus → **42,412 chunks**, MiniLM-L6 FAISS flat + BM25, title-aug; embedded in 50s on GPU),
+`rag/retrieve.py` (Retriever + `/retrieve` FastAPI endpoint, hybrid RRF), `rag/recall_at_k.py`.
+**Recall@k on the real 60 held-out (100% coverage): hybrid r@5 = 0.93** (dense 0.92, bm25 0.87) →
+System C viable. Config held at scale (≥ the 0.32 MB proxy's 0.87). Notable: **BM25 alone wins r@1
+(0.82)** — questions name specific cards; hybrid wins r@3+; top-5 hybrid confirmed. Targets retrieve
+best (rulings r@5 0.96, cardfacts 0.93). Was NOT a re-run of the design study — this is the mandated
+build + recall@k on the real held-out. → *Better: retriever is real, recall@k table delivered, System
+C green-lit.*
+
 ## Current status (as of last entry)
 
 - **Corpus collected:** Yugipedia prose 21.43 MB (11,944 pages) + card-facts 6.04 MB (14,477 cards)
@@ -283,7 +301,9 @@ served and publicly reachable.*
 - **Phase 3 COMPLETE** (E33): adapter + model card on HF; served locally on the 3060 via
   `train/serve_local.py` + cloudflared tunnel. (A durable scale-to-zero Modal endpoint can replace
   the ephemeral tunnel later for the site.)
-- **Next major step:** Phase 4 — build the retriever (FAISS hybrid MiniLM-L6 + BM25 over the corpus),
-  `/retrieve` endpoint, recall@k table; then Phase 5 eval (A/B/C, paired bootstrap judge).
-- **Not yet started:** Phase 2 (QA generation + VALIDATE gauntlet), Phase 3 (QLoRA fine-tune),
-  Phase 4 (retriever build + recall@k), Phase 5 (eval), Phase 6 (site + report).
+- **Phase 4 COMPLETE** (E35): 42,412-chunk hybrid index + `/retrieve` endpoint; recall@k table on
+  the real 60 held-out (hybrid r@5 **0.93**); System C green-lit.
+- **Next major step:** Phase 5 — wire System C (retriever → fine-tune), run A/B/C over the 60
+  held-out, grade with the reference-grounded judge + paired-bootstrap significance, quote
+  disagreements. Then Phase 6 (site + one-page report).
+- **Done:** Phases 0–4. **Remaining:** Phase 5 (eval) · Phase 6 (site + report).

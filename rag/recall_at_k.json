@@ -1,0 +1,56 @@
+{
+  "n_heldout": 60,
+  "scorable": 60,
+  "coverage": 1.0,
+  "n_chunks": 42412,
+  "recall": {
+    "dense": {
+      "recall@1": 0.617,
+      "recall@3": 0.867,
+      "recall@5": 0.917,
+      "recall@10": 0.95
+    },
+    "bm25": {
+      "recall@1": 0.817,
+      "recall@3": 0.85,
+      "recall@5": 0.867,
+      "recall@10": 0.9
+    },
+    "hybrid": {
+      "recall@1": 0.717,
+      "recall@3": 0.917,
+      "recall@5": 0.933,
+      "recall@10": 0.95
+    }
+  },
+  "hybrid_by_source": {
+    "archetype": {
+      "n": 5,
+      "recall@1": 0.6,
+      "recall@3": 0.8,
+      "recall@5": 0.8,
+      "recall@10": 1.0
+    },
+    "cardfacts": {
+      "n": 27,
+      "recall@1": 0.815,
+      "recall@3": 0.926,
+      "recall@5": 0.926,
+      "recall@10": 0.926
+    },
+    "mechanics": {
+      "n": 1,
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "recall@10": 1.0
+    },
+    "rulings": {
+      "n": 27,
+      "recall@1": 0.667,
+      "recall@3": 0.963,
+      "recall@5": 0.963,
+      "recall@10": 0.963
+    }
+  }
+}
