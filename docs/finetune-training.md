@@ -100,9 +100,38 @@ QLoRA 2B, 3 epochs over 2,683 pairs ≈ ~500 steps; on L4 ~10–15 min wall incl
   do not train a separate retrieval-augmented adapter (kept minimal per the brief).
 - One seed, one config unless a sweep is warranted.
 
-## 10. Reproduce (once built)
+## 10. Reproduce
 
 ```bash
-modal run train/modal_finetune_gemma.py        # trains, pushes adapter, saves loss curve
-modal deploy train/serve_finetune.py           # scale-to-zero endpoint (later)
+modal run train/modal_finetune_gemma.py                       # trains, pushes adapter, saves loss curve
+uvicorn train.serve_local:app --host 0.0.0.0 --port 8100      # local serve on the GPU
+cloudflared tunnel --url http://localhost:8100                # public URL
 ```
+
+## 11. Results & loss-curve analysis (`train/loss_curve.png`)
+
+**Outcome:** best-checkpoint **val perplexity 3.872** (eval_loss 1.354), beating the 4.26 reference;
+adapter + model card on HF (`Ace-2504/gemma-2-2b-yugioh-qa`); served 4-bit on an RTX 3060.
+
+**Reading the curve** (blue = train loss on training pairs; orange = val loss on 53 held-out pairs
+never trained on — the generalization "thermometer"):
+
+- **Act 1 — learning (steps 0→~150, ≈ epoch 1):** train and val fall *together* (train 2.42→~1.3,
+  val 1.57→**1.35**). Lockstep decline = genuine, transferable learning.
+- **Act 2 — memorizing (steps ~160→225, epochs 2–3):** the lines **diverge** — train plunges to ~0.9
+  while val flattens/rises (~1.4). That widening gap is the textbook signature of **overfitting**.
+- **The val minimum (~step 150) is the best model;** everything after makes it worse on unseen data.
+  Early stopping kept that checkpoint (ppl 3.87); the first, full-3-epoch run ended in the overfit
+  tail (ppl 5.4).
+
+**Two details:**
+- The **sharp train drop at ~step 160** is the epoch-2 boundary — the model re-sees the same data and
+  memorizes it; val doesn't follow because those gains don't generalize.
+- **Perplexity 3.87 = exp(1.354):** on held-out text the model is about as uncertain as choosing
+  among ~3.9 equally-likely next tokens. Lower = tighter fit.
+
+**The deeper insight (previews the whole experiment):** the val curve improves only modestly
+(1.57→1.35) and plateaus fast. The model quickly learned the *shape* of a Yu-Gi-Oh answer, then
+stopped gaining — it did **not** keep absorbing *facts* into its weights. This visually foreshadows
+the assignment's thesis: **fine-tuning teaches answer shape, not facts; the facts must come from
+retrieval (System C).**
