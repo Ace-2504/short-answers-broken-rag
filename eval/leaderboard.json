@@ -1,0 +1,112 @@
+{
+  "n_items": 60,
+  "per_system": {
+    "A": {
+      "name": "base (closed)",
+      "n": 60,
+      "mean": 3.983,
+      "se": 0.393,
+      "components": {
+        "correctness": 1.83,
+        "completeness": 0.97,
+        "groundedness": 0.18,
+        "clarity": 1
+      }
+    },
+    "B": {
+      "name": "fine-tune (closed)",
+      "n": 60,
+      "mean": 5.25,
+      "se": 0.535,
+      "components": {
+        "correctness": 2.35,
+        "completeness": 1.03,
+        "groundedness": 0.87,
+        "clarity": 1
+      }
+    },
+    "C": {
+      "name": "fine-tune + retrieval",
+      "n": 60,
+      "mean": 8.05,
+      "se": 0.415,
+      "components": {
+        "correctness": 3.85,
+        "completeness": 1.55,
+        "groundedness": 1.65,
+        "clarity": 1
+      }
+    }
+  },
+  "comparisons": {
+    "A_vs_B": {
+      "mean_diff": 1.267,
+      "bootstrap_95CI": [
+        0.417,
+        2.167
+      ],
+      "t": 2.805,
+      "t_p": 0.0068,
+      "wilcoxon_p": 0.0117,
+      "verdict": "significant"
+    },
+    "B_vs_C": {
+      "mean_diff": 2.8,
+      "bootstrap_95CI": [
+        1.717,
+        3.867
+      ],
+      "t": 5.084,
+      "t_p": 0.0,
+      "wilcoxon_p": 0.0,
+      "verdict": "significant"
+    }
+  },
+  "disagreements": [
+    {
+      "id": "qa-046",
+      "question": "Can the effect of Dododo Swordsman that destroys monsters be activated during the Damage Step?",
+      "gold": "Yes, it can be activated during the Damage Step.",
+      "scores": {
+        "A": 1,
+        "B": 1,
+        "C": 10
+      },
+      "answers": {
+        "A": "No, the effect of Dododo Swordsman cannot be activated during the Damage Step. \n\nHere's why:\n\n* **Dododo Swordsman's effect:**  Its effect destroys all monsters your opponent controls.\n* **Damage Step:** This is the phase where damage is calculated and dealt. \n* **Timing:** Effects that can be activated during the Damage Step are those that are triggered by the damage calculation itself, not by the damage being dealt.\n\n**Why it can't be activated during the Damage Step:**\n\nThe effect of Dododo Swordsman is a **destruction effect**, meaning it's triggered by the card's own effect.  This effect is not a \"reaction\" to the damage being dealt.  \n\n**Possible Solutions:**\n\n* **Activate it during your opponent's turn:** If you can activate Dododo Swordsman during your opponent's turn, you can destroy their monsters.\n* **Use a different card:** There are other cards that can destroy monsters during the Damage Step.\n\n\nLet me know if you have any other",
+        "B": "No, the effect cannot be activated during the Damage Step.",
+        "C": "Yes, the effect can be activated during the Damage Step."
+      }
+    },
+    {
+      "id": "qa-034",
+      "question": "If I control two copies of Amazoness Fighting Spirit, does my monster gain 2000 ATK when attacking a stronger monster?",
+      "gold": "No, your monster will only gain 1000 ATK.",
+      "scores": {
+        "A": 1,
+        "B": 4,
+        "C": 10
+      },
+      "answers": {
+        "A": "You are correct! \n\nHere's the breakdown:\n\n* **Amazoness Fighting Spirit's Effect:**  This card's effect states: \"When a monster you control is attacked by a monster with a higher ATK than this card, you can increase the ATK of that monster by 2000.\"\n\n* **Your Situation:** You control two Amazoness Fighting Spirits. This means you have the option to activate their effect when a monster with a higher ATK than the Fighting Spirit is attacking.\n\n* **The Result:**  Yes, your monster will gain 2000 ATK when attacking a stronger monster. \n\n\nLet me know if you have any other Yu-Gi-Oh questions!",
+        "B": "No, the effect only applies once per turn, and the ATK increase is limited to the difference in the monsters' ATK values.",
+        "C": "No, the effect only applies once, and the monster gains 1000 ATK during damage calculation."
+      }
+    },
+    {
+      "id": "qa-059",
+      "question": "What are the two types of monsters that make up the 'Kozmo' archetype?",
+      "gold": "The archetype consists of LIGHT and DARK Psychic \"pilot\" monsters and Machine \"spaceship\" monsters.",
+      "scores": {
+        "A": 1,
+        "B": 1,
+        "C": 10
+      },
+      "answers": {
+        "A": "The 'Kozmo' archetype in Yu-Gi-Oh! is made up of two types of monsters:\n\n1. **Kozmo-type monsters:** These are the main body of the archetype, featuring a unique \"Kozmo\" keyword. They are typically Level 4 or lower, with a focus on summoning and effects that can be activated by their own effects.\n2. **Kozmo-Type Fusion Monsters:** These are the fusion monsters that are part of the archetype. They are typically Level 8 or higher, and their effects are often more powerful than the regular Kozmo-type monsters.\n\n\nLet me know if you have any other questions about the 'Kozmo' archetype!",
+        "B": "The archetype consists of 'Kozmotown' monsters, which are Level 4 or lower, and 'Kozmotown' monsters, which are Level 5 or higher.",
+        "C": "The archetype consists of LIGHT and DARK Psychic \"pilot\" monsters and Machine \"spaceship\" monsters."
+      }
+    }
+  ]
+}

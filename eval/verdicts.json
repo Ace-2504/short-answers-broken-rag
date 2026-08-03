@@ -1,0 +1,1562 @@
+{
+ "qa-008": {
+  "A": {
+   "correctness": 2,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence by claiming the card 'targets' and explaining its effect in a way not supported by the gold text, which simply states they are unable to activate them.",
+   "total": 5
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold evidence provided.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the provided evidence.",
+   "total": 10
+  }
+ },
+ "qa-000": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer includes hallucinations/outside information (definitions of Machine/Cyberse types) not present in the evidence.",
+   "total": 8
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold answer by identifying the card as a Machine-Type monster.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately states the monster type based on the evidence provided.",
+   "total": 10
+  }
+ },
+ "qa-049": {
+  "A": {
+   "correctness": 1,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer correctly identifies that you cannot summon the Fusion Monster, but it invents incorrect game mechanics regarding banishment and summon locations, violating the groundedness constraint.",
+   "total": 3
+  },
+  "B": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer correctly identifies 'No' but provides an incorrect, hallucinated reason not present in the evidence.",
+   "total": 4
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer correctly addresses the restriction and explains the limitation.",
+   "total": 10
+  }
+ },
+ "qa-018": {
+  "A": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer fails to mention the specific exceptions required by the gold evidence and introduces unverified claims about how the effects work.",
+   "total": 4
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the evidence by naming an incorrect exception.",
+   "total": 2
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and fully supported by the evidence.",
+   "total": 10
+  }
+ },
+ "qa-052": {
+  "A": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer gets the conclusion right but provides incorrect reasoning not supported by the evidence (inventing rules about the Graveyard/De-Synchro instead of citing the removal effect).",
+   "total": 4
+  },
+  "B": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer incorrectly identifies the reason as the Synchro Monster's inability to be Special Summoned from the Graveyard, rather than the fact that it is removed from play instead of returning to the Extra Deck.",
+   "total": 4
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the provided evidence.",
+   "total": 10
+  }
+ },
+ "qa-046": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the ground truth evidence provided.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is perfectly accurate and supported by the provided evidence.",
+   "total": 10
+  }
+ },
+ "qa-056": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold evidence and invents incorrect card mechanics.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is incorrect and contradicts the evidence provided.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence.",
+   "total": 1
+  }
+ },
+ "qa-010": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer provides the correct conclusion, but the reasoning provided in the bullet points is entirely invented and contradicts the prompt's instructions to only use the provided evidence.",
+   "total": 8
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate, complete, and directly supported by the evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is perfectly accurate and matches the provided evidence.",
+   "total": 10
+  }
+ },
+ "qa-007": {
+  "A": {
+   "correctness": 3,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer correctly identifies the restriction, but invents a false rule about 'same type' to explain it, which contradicts the provided evidence.",
+   "total": 6
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the restriction stated in the evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the restriction mentioned in the evidence.",
+   "total": 10
+  }
+ },
+ "qa-025": {
+  "A": {
+   "correctness": 1,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence regarding the target requirements and incorrectly claims the effect targets monsters on the field.",
+   "total": 3
+  },
+  "B": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer incorrectly omits the 'LIGHT' and 'non-Link' restrictions, and misinterprets the target requirement.",
+   "total": 4
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and supported by the evidence.",
+   "total": 10
+  }
+ },
+ "qa-047": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence, which states the effect can be used thrice per turn.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence, which states the effect can be used thrice per turn.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence which states the effect can be used three times per turn.",
+   "total": 1
+  }
+ },
+ "qa-054": {
+  "A": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "Correct conclusion, but the explanation invents mechanics not in the evidence (claiming the effect doesn't set from GY) and fails to address the provided evidence.",
+   "total": 4
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and aligns perfectly with the provided evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and aligns with the provided evidence.",
+   "total": 10
+  }
+ },
+ "qa-042": {
+  "A": {
+   "correctness": 2,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is correct in its conclusion but invents incorrect card mechanics (e.g., claiming the effect summons itself from the hand and that there is a once-per-turn limit on summoning from hand) not found in the evidence.",
+   "total": 5
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the restriction stated in the evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the restriction stated in the evidence.",
+   "total": 10
+  }
+ },
+ "qa-028": {
+  "A": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer reaches the correct conclusion but provides completely hallucinated reasoning/evidence that contradicts the ground truth.",
+   "total": 4
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is incorrect and justifies its 'no' with false reasoning regarding the Main Deck.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and directly cites the restriction provided in the evidence.",
+   "total": 10
+  }
+ },
+ "qa-031": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence, making it factually incorrect.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold evidence.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 1,
+   "clarity": 1,
+   "note": "The answer is correct and complete, but it includes the classification of 'Trigger Effect', which is not in the provided evidence, lowering the groundedness score.",
+   "total": 9
+  }
+ },
+ "qa-034": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence and gold standard by stating the effect gains 2000 ATK, whereas the evidence explicitly states it only gains 1000 ATK.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer gives an incorrect reason ('once per turn') not supported by the evidence, which only states it doesn't stack.",
+   "total": 4
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer aligns perfectly with the provided evidence.",
+   "total": 10
+  }
+ },
+ "qa-039": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided gold standard and evidence.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence by adding an incorrect condition.",
+   "total": 2
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "Correct answer, but groundedness is 0 because the explanation about card activation is not in the evidence.",
+   "total": 8
+  }
+ },
+ "qa-016": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "While the direct answer is correct, the explanation includes outside/invented information about the activation conditions that contradicts the provided evidence (which specifically references the number of monsters in the GY as the source of the value).",
+   "total": 8
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the gold and evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately conveys that the amount is fixed at resolution based on the evidence.",
+   "total": 10
+  }
+ },
+ "qa-005": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold standard, claiming it cannot return to the deck while simultaneously claiming it can, resulting in a hallucinated and incoherent explanation.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence.",
+   "total": 1
+  }
+ },
+ "qa-057": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is incorrect and ignores the provided evidence.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold evidence, which confirms the effect can be activated.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer fails to mention that the Special Summon part of the effect cannot be applied, which was key to the gold answer.",
+   "total": 6
+  }
+ },
+ "qa-044": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold evidence by claiming the effect does not target, despite the evidence explicitly stating it does.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer contradicts the ground truth evidence provided.",
+   "total": 3
+  }
+ },
+ "qa-059": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence by inventing non-existent monster types.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is factually incorrect and invents information not found in the evidence.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is verbatim to the gold answer.",
+   "total": 10
+  }
+ },
+ "qa-013": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold standard and the provided evidence, and invents incorrect card text.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately identifies the duration based on the provided evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the evidence provided.",
+   "total": 10
+  }
+ },
+ "qa-030": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold evidence and provides incorrect reasoning.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and fully supported by the provided evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is perfectly aligned with the gold answer and evidence.",
+   "total": 10
+  }
+ },
+ "qa-026": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer includes external information not present in the evidence (e.g., source of summon being hand or Graveyard), triggering the groundedness penalty.",
+   "total": 8
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the restriction mentioned in the evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 3,
+   "completeness": 1,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer misses the crucial restriction that only Machine monsters can be Special Summoned, though it correctly identifies a restriction exists.",
+   "total": 7
+  }
+ },
+ "qa-002": {
+  "A": {
+   "correctness": 0,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is factually incorrect and hallucinates card text that contradicts the provided evidence.",
+   "total": 2
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold answer by stating the incorrect condition.",
+   "total": 2
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and aligns perfectly with the provided evidence.",
+   "total": 10
+  }
+ },
+ "qa-020": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold answer and invents false game mechanics regarding the card's effect usage.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold standard which confirms both effects can be used.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer incorrectly interprets the 'once per turn' constraint as a global limit rather than a per-effect limit.",
+   "total": 3
+  }
+ },
+ "qa-003": {
+  "A": {
+   "correctness": 2,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is correct about the timing, but the explanation invents incorrect card text and limitations not present in the provided evidence.",
+   "total": 5
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate, complete, and grounded in the provided evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold answer and evidence regarding the timing of the effect.",
+   "total": 1
+  }
+ },
+ "qa-024": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and supported by the evidence. Although the explanation includes some redundant/verbose commentary, it correctly identifies the trigger condition.",
+   "total": 10
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and aligns perfectly with the evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "Correct and fully supported by the evidence.",
+   "total": 10
+  }
+ },
+ "qa-038": {
+  "A": {
+   "correctness": 1,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer reached the correct conclusion but provided incorrect reasoning/hallucinated card mechanics not present in the evidence.",
+   "total": 3
+  },
+  "B": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer incorrectly identifies the reason for refusal, contradicting the evidence.",
+   "total": 4
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately explains that the effect does not destroy a card, consistent with the provided evidence.",
+   "total": 10
+  }
+ },
+ "qa-032": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is correct but contains inventions (Level 8, Machine, Graveyard revival) not supported by the evidence.",
+   "total": 8
+  },
+  "B": {
+   "correctness": 1,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer correctly identifies that it cannot be Normal Summoned, but hallucinates card type and summoning conditions not in the evidence.",
+   "total": 3
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is correct and grounded in the evidence provided.",
+   "total": 10
+  }
+ },
+ "qa-014": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is correct and grounded, though it includes extraneous information about the effect text that was not provided in the evidence.",
+   "total": 10
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately conveys the restriction mentioned in the evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the gold and evidence.",
+   "total": 10
+  }
+ },
+ "qa-029": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is correct and grounded, though it includes extraneous information not found in the evidence.",
+   "total": 10
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer perfectly matches the gold standard.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer matches the gold answer and evidence perfectly.",
+   "total": 10
+  }
+ },
+ "qa-027": {
+  "A": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer correctly identifies that it targets but provides incorrect and fabricated information about the card type and its effect.",
+   "total": 4
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and matches the evidence provided.",
+   "total": 10
+  }
+ },
+ "qa-006": {
+  "A": {
+   "correctness": 2,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence by claiming the monster is in the Graveyard, whereas the evidence specifies the monster was Special Summoned *from* the Graveyard (implying it is now on the field). The reasoning is hallucinated.",
+   "total": 5
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the evidence by inventing a requirement that the card must be Special Summoned from the field, whereas the evidence only specifies it cannot be used on one summoned from the Graveyard.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer correctly identifies 'No' but invents a reason (Extra Deck requirement) not found in the evidence.",
+   "total": 4
+  }
+ },
+ "qa-035": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence, invents card effects (searching/ATK changing) not in the text, and incorrectly claims the effect requires Spells.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer incorrectly identifies card effects not present in the evidence and provides incorrect reasoning regarding the Graveyard condition.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer correctly identifies the restriction for the first effect, but fails to address the specific search/ATK reduction effect mentioned in the question.",
+   "total": 6
+  }
+ },
+ "qa-001": {
+  "A": {
+   "correctness": 1,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer incorrectly describes the card's effects and invents a sequence not supported by the evidence.",
+   "total": 3
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the evidence provided.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer matches the gold standard perfectly.",
+   "total": 10
+  }
+ },
+ "qa-050": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the ground truth by stating it is \"permanently banished\" and cannot be brought back, and invents effects about negation and extra deck summoning not found in the evidence.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is factually incorrect and contradicts the provided evidence.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer matches the gold answer and evidence perfectly.",
+   "total": 10
+  }
+ },
+ "qa-036": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold answer and invents mechanics not found in the provided evidence.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence, which states each effect can be used once per turn.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer contradicts the gold answer by stating 'No' instead of 'Yes'.",
+   "total": 3
+  }
+ },
+ "qa-037": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold evidence, incorrectly identifies the phase, and incorrectly describes the summoning location.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and matches the gold evidence.",
+   "total": 10
+  }
+ },
+ "qa-012": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is grounded on the core fact, but it invents detailed mechanical justifications (e.g., specific sequencing rules) not present in the provided evidence.",
+   "total": 8
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the gold and evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the gold and evidence.",
+   "total": 10
+  }
+ },
+ "qa-058": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "Correct answer, though the explanation includes unnecessary filler/incorrect reasoning not present in the evidence.",
+   "total": 10
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and aligns perfectly with the evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer correctly identifies that it does not start a chain.",
+   "total": 10
+  }
+ },
+ "qa-053": {
+  "A": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer correctly states it activates but hallucinates card type and effect text not present in the evidence.",
+   "total": 4
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold evidence, which explicitly states the effect activates regardless of whether eligible monsters were summoned.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 3,
+   "completeness": 1,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is correct regarding the activation, but failed to ground the reasoning in the specific effect behavior mentioned in the evidence, instead citing card type.",
+   "total": 7
+  }
+ },
+ "qa-011": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer incorrectly claims you cannot use the effect and misinterprets the card's text provided in the evidence.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is factually incorrect and contradicts the provided evidence.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is correct and accurately cites the trigger condition and locations.",
+   "total": 10
+  }
+ },
+ "qa-017": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence and gold answer, which confirm that sending the Equip Card is the cost/action that negates the effect.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 3,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "Correctly identifies you can negate, but incorrectly classifies the effect as a Trigger Effect instead of a Quick Effect as stated in the evidence.",
+   "total": 6
+  }
+ },
+ "qa-045": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold standard evidence, which explicitly states the effect does not target.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "Correct and matches evidence perfectly.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and aligns perfectly with the evidence.",
+   "total": 10
+  }
+ },
+ "qa-021": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence, which explicitly states the restriction.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence which explicitly states you cannot Special Summon monsters except WATER monsters.",
+   "total": 1
+  }
+ },
+ "qa-043": {
+  "A": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer claims they are separate, which is correct, but includes hallucinations about card effects and history not present in the evidence.",
+   "total": 4
+  },
+  "B": {
+   "correctness": 1,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the ground truth by claiming 'Pixie' is a sub-archetype, which is not supported by the provided evidence.",
+   "total": 3
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer aligns with the gold standard.",
+   "total": 10
+  }
+ },
+ "qa-023": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 1,
+   "clarity": 1,
+   "note": "The answer is correct and complete, but it includes unsupported claims about 'turn order' and 'exceptions' not found in the evidence.",
+   "total": 9
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the evidence provided.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the restriction stated in the evidence.",
+   "total": 10
+  }
+ },
+ "qa-041": {
+  "A": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer correctly identifies the restriction but invents false information about the card's effect (that it summons Warriors), violating groundedness.",
+   "total": 4
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and aligns perfectly with the evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the restriction mentioned in the evidence.",
+   "total": 10
+  }
+ },
+ "qa-048": {
+  "A": {
+   "correctness": 2,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer correctly identifies 'No', but fails the groundedness check because it invents false reasoning and fake 'Key Rulings' not present in the provided evidence.",
+   "total": 5
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the requirement stated in the evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the evidence provided.",
+   "total": 10
+  }
+ },
+ "qa-019": {
+  "A": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer gets the correct conclusion, but the explanation invents mechanics not in the evidence, contradicting the evidence's statement that it cannot be activated in the Damage Step.",
+   "total": 4
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer matches the gold answer and evidence perfectly.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and aligns with the provided evidence.",
+   "total": 10
+  }
+ },
+ "qa-051": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer includes hallucinations/outside logic not found in the evidence (e.g., explaining why, examples, and rules about targeting).",
+   "total": 8
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and fully supported by the evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 1,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer correctly states you cannot target zero cards but adds information ('at least 1 card you control') not found in the provided evidence.",
+   "total": 9
+  }
+ },
+ "qa-004": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence and relies on external misinformation.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "Correct conclusion, but incorrectly attributes the restriction to the monster's effect rather than the specific condition provided in the evidence.",
+   "total": 6
+  },
+  "C": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer invents an effect for 'Card Advance' not present in the evidence.",
+   "total": 1
+  }
+ },
+ "qa-022": {
+  "A": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer correctly states 'No' but provides hallucinated information about the card's effect and purpose not found in the evidence.",
+   "total": 4
+  },
+  "B": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer correctly states 'No' but provides an incorrect requirement (banishing from hand) not found in the evidence.",
+   "total": 4
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately identifies the inability to banish from the GY by stating the allowed methods from the evidence.",
+   "total": 10
+  }
+ },
+ "qa-040": {
+  "A": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold evidence by claiming it 'depends' and that such effects 'might be possible'.",
+   "total": 1
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer matches the gold answer and evidence perfectly.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer accurately reflects the provided evidence.",
+   "total": 10
+  }
+ },
+ "qa-033": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "Correctly identifies that the effect does not target, though the explanation uses extraneous reasoning not found in the evidence.",
+   "total": 10
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate, matches the gold standard, and is clearly stated.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and aligns with the provided evidence.",
+   "total": 10
+  }
+ },
+ "qa-015": {
+  "A": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer is factually correct but violates the groundedness constraint by inventing a step-by-step breakdown and rules not present in the provided evidence.",
+   "total": 8
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer perfectly matches the gold answer and evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate, complete, and fully supported by the evidence.",
+   "total": 10
+  }
+ },
+ "qa-009": {
+  "A": {
+   "correctness": 2,
+   "completeness": 1,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "Correct conclusion, but the reasoning invents rules not found in the evidence.",
+   "total": 4
+  },
+  "B": {
+   "correctness": 5,
+   "completeness": 2,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer is accurate and aligns perfectly with the provided evidence.",
+   "total": 10
+  },
+  "C": {
+   "correctness": 1,
+   "completeness": 1,
+   "groundedness": 2,
+   "clarity": 1,
+   "note": "The answer identifies the correct outcome but provides the wrong justification based on the provided evidence.",
+   "total": 5
+  }
+ },
+ "qa-055": {
+  "A": {
+   "correctness": 1,
+   "completeness": 2,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer includes a completely hallucinated effect description for Cobalt Sparrow that is not in the provided evidence.",
+   "total": 4
+  },
+  "B": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the gold standard which confirms the effect is gained.",
+   "total": 1
+  },
+  "C": {
+   "correctness": 0,
+   "completeness": 0,
+   "groundedness": 0,
+   "clarity": 1,
+   "note": "The answer contradicts the provided evidence, which states the monster gains the effect as a permanent property of being Xyz Summoned with that material.",
+   "total": 1
+  }
+ }
+}

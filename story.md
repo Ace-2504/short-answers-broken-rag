@@ -285,6 +285,27 @@ best (rulings r@5 0.96, cardfacts 0.93). Was NOT a re-run of the design study �
 build + recall@k on the real held-out. → *Better: retriever is real, recall@k table delivered, System
 C green-lit.*
 
+**E36 · Phase 5 evaluation planned.** Wrote `docs/eval-plan.md`: run A (base, closed-book) / B
+(fine-tune, closed-book) / C (fine-tune + top-5 retrieval) over the 60 held-out; one model in memory
+with `peft disable_adapter` for A (sidesteps the adapter-race trap, keeps A/B on identical base);
+greedy decoding. Judge = reference-grounded (question+gold+evidence), blind + pointwise, rubric /10
+(correctness 5 / completeness 2 / groundedness 2 / clarity 1; groundedness→0 on invented figures;
+refusal beats confident error). Stats = paired bootstrap CI + t-test + Wilcoxon on A-vs-B and B-vs-C.
+Deliverables: responses/verdicts/leaderboard.json + ≥3 disagreements; harness idempotent. Hypothesis
+(to test, not assume): **A≈B, C≫both**. Not executed. → *Better: the experiment's verdict phase is
+specced.*
+
+**E37 · Phase 5 evaluation COMPLETE — the experiment is answered.** Ran A/B/C over the 60 held-out
+(endpoint-reuse: `:8100` use_base for A, `:8200` retrieval for C), judged blind (reference-grounded,
+Gemini flash-lite), aggregated with paired bootstrap + t + Wilcoxon. **Leaderboard /10: A 3.98 · B
+5.25 · C 8.05.** Both comparisons significant: **A-vs-B +1.27** (p=0.007), **B-vs-C +2.80** (p<0.001).
+**Honest finding — partly disagrees with the class reference:** retrieval is the dominant win (C≫B),
+AND fine-tuning *also* significantly beat base (B>A) — where the reference found it did not. Breakdown
+shows B's gain is mostly **groundedness** (0.18→0.87 = tighter, less-hallucinatory *shape*), not facts
+(facts arrive with retrieval: C correctness 3.85 vs B 2.35). 3 disagreements quoted (all A/B
+hallucinate, C returns gold). Deliverables: responses/verdicts/leaderboard.json. → *Better: the whole
+experiment measured; a real, defensible, partly-contrarian result.*
+
 ## Current status (as of last entry)
 
 - **Corpus collected:** Yugipedia prose 21.43 MB (11,944 pages) + card-facts 6.04 MB (14,477 cards)
@@ -301,9 +322,9 @@ C green-lit.*
 - **Phase 3 COMPLETE** (E33): adapter + model card on HF; served locally on the 3060 via
   `train/serve_local.py` + cloudflared tunnel. (A durable scale-to-zero Modal endpoint can replace
   the ephemeral tunnel later for the site.)
-- **Phase 4 COMPLETE** (E35): 42,412-chunk hybrid index + `/retrieve` endpoint; recall@k table on
-  the real 60 held-out (hybrid r@5 **0.93**); System C green-lit.
-- **Next major step:** Phase 5 — wire System C (retriever → fine-tune), run A/B/C over the 60
-  held-out, grade with the reference-grounded judge + paired-bootstrap significance, quote
-  disagreements. Then Phase 6 (site + one-page report).
-- **Done:** Phases 0–4. **Remaining:** Phase 5 (eval) · Phase 6 (site + report).
+- **Phase 4 COMPLETE** (E35): 42,412-chunk hybrid index + `/retrieve`; recall@k hybrid r@5 **0.93**.
+- **Phase 5 COMPLETE** (E37): A 3.98 / B 5.25 / C **8.05**; A-vs-B +1.27 (sig), B-vs-C +2.80 (sig).
+  Retrieval is the win; fine-tuning also helped (via shape/groundedness) — partly contra the reference.
+- **Next major step:** Phase 6 — deploy the side-by-side A/B/C site (Vercel, live against the real
+  endpoints, show retrieved passages + leaderboard + recall@k) and write the one-page PDF report.
+- **Done:** Phases 0–5. **Remaining:** Phase 6 (site + report).
