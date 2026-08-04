@@ -9,11 +9,15 @@ Run:  uvicorn train.serve_local:app --host 0.0.0.0 --port 8100
 import os
 import contextlib
 from typing import Optional
+import requests
 import torch
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
+
+RETRIEVER_URL = os.environ.get("RETRIEVER_URL", "http://localhost:8200/retrieve")
 
 BASE = "google/gemma-2-2b-it"
 ADAPTER = "Ace-2504/gemma-2-2b-yugioh-qa"
@@ -49,6 +53,24 @@ DEVICE = next(model.parameters()).device
 print(f"ready on {DEVICE}")
 
 app = FastAPI(title="gemma-2-2b-yugioh-qa")
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+
+def _gen(question, context=None, use_base=False, max_new_tokens=220, temperature=0.0):
+    if context:
+        user = (f"Use ONLY the following context to answer.\n\nContext:\n{context}\n\n"
+                f"Question: {question}")
+    else:
+        user = question
+    user = (SYS + "\n\n" + user).strip()
+    enc = tok.apply_chat_template([{"role": "user", "content": user}], add_generation_prompt=True,
+                                  return_tensors="pt", return_dict=True).to(DEVICE)
+    input_len = enc["input_ids"].shape[1]
+    adapter_ctx = model.disable_adapter() if use_base else contextlib.nullcontext()
+    with torch.no_grad(), adapter_ctx:
+        out = model.generate(**enc, max_new_tokens=max_new_tokens,
+                             do_sample=temperature > 0, temperature=max(temperature, 1e-4),
+                             top_p=0.9, pad_token_id=tok.eos_token_id)
+    return tok.decode(out[0][input_len:], skip_special_tokens=True).strip()
 
 class Req(BaseModel):
     question: str
@@ -63,21 +85,25 @@ def health():
 
 @app.post("/generate")
 def generate(r: Req):
-    if r.context:
-        user = (f"Use ONLY the following context to answer.\n\nContext:\n{r.context}\n\n"
-                f"Question: {r.question}")
-    else:
-        user = r.question
-    user = (SYS + "\n\n" + user).strip()
-    enc = tok.apply_chat_template([{"role": "user", "content": user}],
-                                  add_generation_prompt=True, return_tensors="pt",
-                                  return_dict=True).to(DEVICE)
-    input_len = enc["input_ids"].shape[1]
-    # sequential eval only -> toggling the adapter per request is safe (no concurrency race)
-    adapter_ctx = model.disable_adapter() if r.use_base else contextlib.nullcontext()
-    with torch.no_grad(), adapter_ctx:
-        out = model.generate(**enc, max_new_tokens=r.max_new_tokens,
-                             do_sample=r.temperature > 0, temperature=max(r.temperature, 1e-4),
-                             top_p=0.9, pad_token_id=tok.eos_token_id)
-    text = tok.decode(out[0][input_len:], skip_special_tokens=True).strip()
+    text = _gen(r.question, r.context, r.use_base, r.max_new_tokens, r.temperature)
     return {"answer": text, "system": "base" if r.use_base else "finetune"}
+
+class AskReq(BaseModel):
+    question: str
+    k: int = 5
+
+@app.post("/ask")
+def ask(r: AskReq):
+    """One call -> all three systems (A base, B fine-tune, C fine-tune+retrieval) + C's passages.
+    Sequential, so the per-request adapter toggle for A is safe."""
+    a = _gen(r.question, use_base=True)
+    b = _gen(r.question, use_base=False)
+    try:
+        passages = requests.post(RETRIEVER_URL, json={"question": r.question, "k": r.k},
+                                 timeout=30).json()["passages"]
+    except Exception as e:
+        passages = []
+        print(f"retriever error: {e}")
+    ctx = "\n\n".join(f"[{p['title']}] {p['text']}" for p in passages)
+    c = _gen(r.question, context=ctx, use_base=False) if ctx else "(retriever unavailable)"
+    return {"question": r.question, "A": a, "B": b, "C": c, "passages": passages}

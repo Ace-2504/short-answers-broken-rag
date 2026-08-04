@@ -306,6 +306,33 @@ shows B's gain is mostly **groundedness** (0.18→0.87 = tighter, less-hallucina
 hallucinate, C returns gold). Deliverables: responses/verdicts/leaderboard.json. → *Better: the whole
 experiment measured; a real, defensible, partly-contrarian result.*
 
+**E38 · Phase 6 (site + report) planned.** Wrote `docs/site-report-plan.md`: a single `/ask` backend
+(A via use_base, B, C via retriever+generate → `{A,B,C,passages}`) behind a durable public URL
+(Modal scale-to-zero vs local-3060+cloudflared tunnel — decision pending); a Next.js Vercel site
+showing A/B/C live side-by-side + C's retrieved passages + the real leaderboard & recall@k tables
+(no hardcoded numbers), phone-responsive, research-lab theme; and the one-page `report.pdf` (headline
+table, one plot, expected-vs-disagreed = the B>A finding, biggest time-sink). Not built. → *Better:
+final packaging phase specced.*
+
+**E39 · Full results dossier built (all statistics laid out).** At Harman's request (review-before-
+one-pager), compiled every statistic into `report/results-dossier.html` and published it as an
+artifact: A/B/C leaderboard + SE bar chart, paired significance, rubric-component breakdown, recall@k
+(by method + source), the QLoRA loss curve (embedded) + val perplexity, the data funnel, base-probe
+1.5/12, the 3 disagreements, cost (~$3), and the config. CVD-safe A/B/C palette (validated both
+themes); numbers all trace to the committed JSON. Power cut mid-task (local servers :8100/:8200/tunnel
+stopped — restart when building the site). → *Better: Harman has a single reviewable stats reference
+to draw the one-page report from.*
+
+**E40 · Phase 6 built — site deployed, report written, README done.** After power-cut recovery:
+restarted the servers, added a **`/ask` gateway** to `serve_local.py` (A via use_base, B, C via
+retriever + generate, + CORS) behind a cloudflared tunnel (verified live A/B/C — e.g. Dark Magician
+ATK: A "2000" wrong, B "1000" wrong, C "2500" correct). Built `site/index.html` (research-lab theme,
+Cobalt + swatch picker, live `/ask`, C's passages, leaderboard + recall@k tables), **deployed to
+Vercel → https://site-eight-liard-61.vercel.app** (public, HTTP 200). Wrote the one-page **`report.pdf`**
+in Harman's voice (fpdf2; the five required points + A/B/C bar chart). Built `report/results-dossier.html`
+(full stats artifact). Updated README to the submission spec (reproduce-in-order, HF link, live URL,
+endpoints, cost). → *Better: all six parts of the assignment now have deliverables.*
+
 ## Current status (as of last entry)
 
 - **Corpus collected:** Yugipedia prose 21.43 MB (11,944 pages) + card-facts 6.04 MB (14,477 cards)
@@ -324,7 +351,7 @@ experiment measured; a real, defensible, partly-contrarian result.*
   the ephemeral tunnel later for the site.)
 - **Phase 4 COMPLETE** (E35): 42,412-chunk hybrid index + `/retrieve`; recall@k hybrid r@5 **0.93**.
 - **Phase 5 COMPLETE** (E37): A 3.98 / B 5.25 / C **8.05**; A-vs-B +1.27 (sig), B-vs-C +2.80 (sig).
-  Retrieval is the win; fine-tuning also helped (via shape/groundedness) — partly contra the reference.
-- **Next major step:** Phase 6 — deploy the side-by-side A/B/C site (Vercel, live against the real
-  endpoints, show retrieved passages + leaderboard + recall@k) and write the one-page PDF report.
-- **Done:** Phases 0–5. **Remaining:** Phase 6 (site + report).
+- **Phase 6 COMPLETE** (E40): site live at https://site-eight-liard-61.vercel.app; `report.pdf` written
+  (Harman's voice, 5 points); README to submission spec.
+- **Done:** Phases 0–6 — every assignment part has a deliverable. **Remaining:** commit Phase 6;
+  keep the local server + cloudflared tunnel up while the site/endpoints are being graded (ephemeral).
