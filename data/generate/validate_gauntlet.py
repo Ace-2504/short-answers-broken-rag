@@ -4,7 +4,7 @@ the clean SFT set data/train.jsonl (chat/messages format) and reports the attrit
 Gates: G1 format -> G2 judge grounding/correctness (resumable) -> G3 near-dup dedup ->
 G4 decontaminate vs held-out -> G5 tag (no cap). Nothing here calls the teacher except G2.
 
-Outputs: finetune/verdicts.jsonl (judge cache), data/train.jsonl, finetune/gauntlet_report.json
+Outputs: data/generate/verdicts.jsonl (judge cache), data/train.jsonl, data/generate/gauntlet_report.json
 """
 import json, time, pathlib, sys, collections
 import numpy as np
@@ -14,8 +14,8 @@ from common import gemini, call_json, containment, load_ids, load_jsonl
 HERE = pathlib.Path(__file__).parent
 RAW = HERE / "raw_qa.jsonl"
 VERD = HERE / "verdicts.jsonl"
-HELDOUT = HERE.parent / "data" / "heldout.jsonl"
-TRAIN = HERE.parent / "data" / "train.jsonl"
+HELDOUT = HERE.parent / "heldout.jsonl"
+TRAIN = HERE.parent / "train.jsonl"
 REPORT = HERE / "gauntlet_report.json"
 
 Q_MIN, Q_MAX, A_MIN, A_MAX = 15, 300, 3, 1200      # G1

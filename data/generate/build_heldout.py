@@ -9,8 +9,8 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from common import gemini, call_json, containment, load_ids, load_jsonl
 
 HERE = pathlib.Path(__file__).parent
-CORPUS = HERE.parent / "data" / "corpus" / "corpus_clean.jsonl"
-OUT = HERE.parent / "data" / "heldout.jsonl"
+CORPUS = HERE.parent / "corpus" / "corpus_clean.jsonl"
+OUT = HERE.parent / "heldout.jsonl"
 SEED = 20260801
 TARGET, ATTEMPTS = 60, 100          # generate up to ATTEMPTS pages, keep verbatim-evidence ones
 

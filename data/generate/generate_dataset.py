@@ -4,14 +4,14 @@ the proven pilot prompt. Resumable — skips chunks already generated.
 Targets ~1,200 chunks (stratified, on-target biased) -> ~2,800 raw pairs, for ≥2,000
 survivors after the judge gauntlet.
 
-Outputs: finetune/train_chunks.jsonl, finetune/raw_qa.jsonl
+Outputs: data/generate/train_chunks.jsonl, data/generate/raw_qa.jsonl
 """
 import json, time, random, pathlib, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from common import gemini, call_json, chunk, load_ids, load_jsonl
 
 HERE = pathlib.Path(__file__).parent
-CORPUS = HERE.parent / "data" / "corpus" / "corpus_clean.jsonl"
+CORPUS = HERE.parent / "corpus" / "corpus_clean.jsonl"
 CHUNKS = HERE / "train_chunks.jsonl"
 RAW = HERE / "raw_qa.jsonl"
 SEED = 20260801

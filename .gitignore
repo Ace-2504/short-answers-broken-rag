@@ -55,10 +55,9 @@ Thumbs.db
 .idea/
 
 # ---- Phase-2 intermediates: embed corpus passages (incl. © card text), reproducible ----
-finetune/raw_qa.jsonl
-finetune/train_chunks.jsonl
-finetune/verdicts.jsonl
-finetune/pilot/*.jsonl
+data/generate/raw_qa.jsonl
+data/generate/train_chunks.jsonl
+data/generate/verdicts.jsonl
 
 # ---- Keep these deliverables even though patterns above are broad ----
 !data/DATA.md

@@ -1,4 +1,4 @@
-"""Phase-1 corpus cleaning — implements docs/corpus-cleaning-system.md.
+"""Phase-1 corpus cleaning — Yugipedia prose only (card-facts pass through untouched).
 
 Cleans the YUGIPEDIA prose only (card-facts pass through untouched, per decision).
 Default DRY_RUN: reports exactly what each rule/threshold would drop, deletes nothing.

@@ -47,4 +47,4 @@ supplying passages at inference it becomes *System C*.
 ## Reproduce
 
 Training script and full data pipeline: the assignment repo (`train/modal_finetune_gemma.py`,
-`finetune/`, `data/DATA.md`).
+`data/generate/`, `data/DATA.md`).

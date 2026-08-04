@@ -2,13 +2,13 @@
 
 > Honest counts at **every** stage, from raw documents to surviving pairs. Numbers marked
 > `TBD` are filled in **as extraction runs** — they must be measured, never estimated.
-> Verified source/license facts come from `docs/assignment-verification.md` (VERIFIED section).
+> Source/license facts were verified against the assignment brief and the live Yugipedia / YGOPRODeck APIs.
 
 ## Domain
 
 Yu-Gi-Oh! (rulings, card interactions, timing/chains, archetype mechanics, lore). Chosen
 because Gemma 2 2B **base is measured to be ignorant** of it (probe: ~1.5/12 correct, confident
-fabrication on modern cards/rulings — see `docs/verification/probe_gemma_base.py`), so systems
+fabrication on modern cards/rulings), so systems
 A/B/C can actually separate.
 
 ## Sources, licenses, and what counts toward the 20 MB floor
@@ -46,9 +46,8 @@ from bios + episodes + archetype/series + card lore/ruling prose.
 
 ## Chunking
 
-Parameters chosen by the retriever design study (`rag/chunking_study/`, results in
-`docs/initial-testing.md` §6). Measured on a 0.32 MB proxy — **re-confirm on the full corpus in
-Phase 4.**
+Parameters chosen by a retriever design study (chunk-size, overlap, top-k, and embedder sweeps).
+Measured on a 0.32 MB proxy — **re-confirmed on the full corpus in Phase 4.**
 
 | Parameter | Value | Basis |
 |-----------|-------|-------|
@@ -68,7 +67,7 @@ embeddings blur but BM25 matches exactly — measured hybrid recall@5 0.87 vs pu
 (2) among dense models MiniLM-L6 gave the best recall *and* the fastest encoding, and the brief
 explicitly allows any embedder with justification; (3) flat index is sub-millisecond at our
 scale (~24.5k chunks) where IVF underperforms and cannot train well. These come from a 0.32 MB
-proxy study (`docs/initial-testing.md` §6) and are **re-confirmed on the full corpus in Phase 4.**
+proxy study and are **re-confirmed on the full corpus in Phase 4.**
 
 ## The funnel (measured counts — fill as we go)
 
@@ -84,7 +83,7 @@ proxy study (`docs/initial-testing.md` §6) and are **re-confirmed on the full c
 | QA pairs surviving the gauntlet (`train.jsonl`) | **2,683** ✅ (≥ 2,000) |
 | Held-out test items (`heldout.jsonl`, gold + evidence) | **60** ✅ (≥ 60) |
 
-**Phase-2 QA gauntlet funnel** (`finetune/gauntlet_report.json`, run 2026-08-01):
+**Phase-2 QA gauntlet funnel** (`data/generate/gauntlet_report.json`, run 2026-08-01):
 
 | Gate | Pairs | Dropped |
 |------|-------|---------|
@@ -121,7 +120,7 @@ it (in-line citation strips, header/category drops, MinHash-LSH dedup — search
 
 ### Cleaning funnel (Yugipedia prose; card-facts pass through untouched)
 
-Per `docs/corpus-cleaning-system.md`, executed 2026-08-01 → `corpus_clean.jsonl`:
+Cleaning pipeline (`data/collect/clean_corpus.py`), executed 2026-08-01 → `corpus_clean.jsonl`:
 
 | Stage | Docs | Notes |
 |-------|------|-------|
@@ -157,10 +156,11 @@ Yu-Gi-Oh card pool up to that date; cards printed after it are out of scope.
 
 ## Files
 
-- `data/train.jsonl` — surviving QA pairs (Phase 2). **not yet produced**
-- `data/heldout.jsonl` — held-out test set, `{id, question, gold, evidence}` (Phase 2). **not yet produced**
-- corpus statistics — **not yet produced**
+- `data/train.jsonl` — 2,683 surviving QA pairs (chat/messages format).
+- `data/heldout.jsonl` — 60 held-out test items, `{id, question, gold, evidence}`.
+- corpus statistics — the funnel tables above (raw → cleaned → chunks → pairs).
+- `data/collect/` — fetch + clean scripts; `data/generate/` — teacher QA + judge gauntlet.
 
 ## Cost
 
-Data-stage spend logged in `../costs.md` (teacher generation + gating API calls).
+Data-stage spend (teacher generation + gating API calls) is part of the ≈ $3 total broken down in the repo `README.md`.
