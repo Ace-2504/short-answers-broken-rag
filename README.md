@@ -98,6 +98,4 @@ cloudflared tunnel --url http://localhost:8100                # public /ask URL 
 cd site && vercel --prod
 ```
 
-`data/corpus/*`, `rag/index/*`, and the `data/generate/` intermediate `.jsonl` are git-ignored (size
-and © card text); the committed deliverables are the scripts, `DATA.md`, `train.jsonl`, `heldout.jsonl`,
-the eval JSON, `report.pdf`, and the site.
+
