@@ -28,7 +28,7 @@ it did not. The gain is concentrated in **groundedness** (0.18 → 0.87), i.e. a
 ## Links
 
 - **Model (HF Hub):** https://huggingface.co/Ace-2504/gemma-2-2b-yugioh-qa
-- **Live site (Vercel):** https://site-eight-liard-61.vercel.app
+- **Live site (Vercel):** https://harman-ygo-slm.vercel.app
 - **Endpoints** (cloudflared tunnel to the local RTX 3060 — must be running for the live site):
   - `/ask` (all three systems + C's passages, one call): `https://tennis-frost-biology-presidential.trycloudflare.com/ask`
   - `/generate` (base via `use_base`, and fine-tune): same server, `…/generate`
