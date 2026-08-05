@@ -70,10 +70,13 @@ gap()
 
 # ---- 3. the RAG study (centerpiece) ----
 h("3.  The RAG study - is retrieval or the reader the bottleneck?")
-body("System C stalls near 8. Retrieval already finds the right passage 93% of the time, so I pointed my "
-     "experiments straight at the remaining **7%** - the questions where the RAG itself could be blamed - to "
-     "see whether fixing retrieval would fix the score. Every retrieval-side experiment failed to move it, "
-     "which is what indirectly proved the problem is the reader, not my RAG implementation. What each showed:")
+body("System C stalls near **8/10** on answer quality, even though retrieval already fetches the right "
+     "passage **93%** of the time. These are two different measures - 93% is a retrieval number (is the "
+     "right passage found?), while 8/10 is the judge's answer-quality score - so the gap between them is "
+     "itself the clue: the passage is usually there, but the answer still is not a 10. That is why I pointed "
+     "my experiments at the remaining 7% - the questions where the RAG could be blamed - to see whether fixing "
+     "retrieval would fix the score. Every retrieval-side experiment failed to move it, which is what "
+     "indirectly proved the problem is the reader, not my RAG implementation. What each showed:")
 gap(0.5)
 bullet("**Reranking** (re-order the retrieved passages): no help - slightly worse, 8.05 -> 7.55.")
 bullet("**Deeper retrieval** (pull more passages): recall rose 0.93 -> 0.97, but the score did not move.")
