@@ -97,6 +97,21 @@ proxy study and are **re-confirmed on the full corpus in Phase 4.**
 Type mix (final): interaction 66% + timing 19% = **85% on-target**; definition 8%, other 4%, lore 3%.
 Difficulty: 55% multistep / 45% lookup. Chat/messages format (system+user+assistant).
 
+**Held-out composition** (`heldout.jsonl`, 60 items) — the held-out is tagged by corpus **source**
+only (it carries no question-type tag; the type mix above is for the *training* set):
+
+| Source | Items | Share |
+|--------|------:|------:|
+| cardfacts (stats / effect / banlist — fact lookup) | 27 | 45% |
+| rulings (interactions, timing) | 27 | 45% |
+| archetype | 5 | 8% |
+| mechanics | 1 | 2% |
+
+Roughly a **50/50 mix of fact-lookup and rulings questions**, with no pure-lore items. This is why the
+held-out set separates the systems the way it does: the cardfacts half needs a specific fact neither
+closed-book system holds (so retrieval wins decisively), while the rulings half is where the fine-tune's
+answer-shape lifts System B over System A.
+
 **Raw composition (pre-cleaning, per source):**
 
 | source | role | pages/cards | MB |
