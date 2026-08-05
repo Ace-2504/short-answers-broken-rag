@@ -1,8 +1,9 @@
-# Yu-Gi-Oh SLM — does fine-tuning teach *facts*, or just the *shape* of an answer?
+# Short answers, broken RAG — why the reader, not the retriever, is a small model's ceiling
 
-> A small-language-model experiment on the Yu-Gi-Oh! trading card game. Three systems answer the same
-> held-out questions; a reference-grounded AI judge scores them 0–10; the numbers tell you whether
-> fine-tuning or retrieval is what actually makes a small model *know* things.
+> A small-language-model experiment on the Yu-Gi-Oh! trading card game: three systems answer the same
+> held-out questions, graded 0–10 by a reference-grounded AI judge. Fine-tuning teaches the *shape* of an
+> answer and retrieval supplies the *facts* — but the flagship result is the **ceiling**: even handed the
+> right passage, a 2.6B model gives short, incomplete answers, and no retrieval trick fixes it.
 
 **[▶ Live arena](https://harman-ygo-slm.vercel.app)** ·
 **[Model — fine-tune](https://huggingface.co/Ace-2504/gemma-2-2b-yugioh-qa)** ·
