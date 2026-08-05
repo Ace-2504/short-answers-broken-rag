@@ -434,7 +434,7 @@ locally only; the deployed arena still shows the 20-question dropdown. (Not run,
 
 **E55 · Prompt-tweak experiment on System C's short answers (Blackwing) — a clean negative result.**
 Tested whether a "be complete" instruction fixes the fine-tune's terse answers, on *"what is the effect of
-Blackwing Full Armor Master?"* (original C: 27 words, 6/10, omits the effect): **(a)** mild "answer fully"
+Blackwing Full Armor Master?"* (original C: 27 words, omits the effect): **(a)** mild "answer fully"
 → 30 words, **5/10**, ignored; **(b)** strong directive that *named* the mechanics (Wedge Counters, take
 control, destroy) → 49 words, **8/10** — but that leaks the answer into the prompt, unusable in production;
 **(c)** generic strong push ("say everything it does", no hints) → 42 words, **3/10** — **backfired**: forced
@@ -469,8 +469,10 @@ flat. Recall ≠ answer quality.
 the recovered clause). The bug affects only 0.2% of cards.
 
 **Clone-C4 · Six non-retraining reader fixes (Blackwing + Endymion).** Self-consistency, self-verification,
-and quote-then-answer all failed; the only reliable win was **a stronger reader on the same context → 6/10 to
-10/10** — the controlled "hold context, change reader" confirmation.
+and quote-then-answer all failed; the only reliable win was **a stronger reader on the same context, which
+produced complete, correct answers** where the fine-tune under-answered — the controlled "hold context, change
+reader" confirmation. (Per-question judge scores omitted: the judge is stochastic, a later live check gave the
+baseline cards 1/10 and 7/10.)
 
 **Clone-C5 · Reviewed 8 papers on small-model RAG.** They converge: the reader is the bottleneck; retrieval
 and prompt tricks don't fix it; preference-tuned RAFT or a stronger reader do.

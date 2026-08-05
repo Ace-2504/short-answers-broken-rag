@@ -21,7 +21,9 @@ the passage** — plus its trained brevity (100% of its 2,683 training answers a
 ## 2. Experiment: can a prompt tweak fix the short/incomplete answers? — **No.**
 
 Tested on *"What is the effect of Blackwing Full Armor Master?"* (retrieved passage contains the full
-effect; original C answer = 27 words, **6/10**, omits the effect):
+effect; original C answer = 27 words, omits the effect). *The judge scores below are from a single run — the
+reference-grounded judge is stochastic, so read them as the **relative** effect of each prompt, not absolute
+marks (a later live check scored this card differently).*
 
 | Prompt | Words | Score | Result |
 |--------|------:|:-----:|--------|
