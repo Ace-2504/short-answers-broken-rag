@@ -137,17 +137,17 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
       <p style="margin:6px 0 16px">Each system is the same Gemma 2 2B — fine-tune, then add retrieval. Click any one to
         open its own site (training details, corpus, cost, evaluation) in a new tab.</p>
       <div style="overflow-x:auto"><table style="min-width:520px">
-        <thead><tr><th style="width:34%">Step</th><th>System</th><th style="text-align:right">Judge /10</th><th style="text-align:right">Open</th></tr></thead>
+        <thead><tr><th style="width:40%">Step</th><th>System</th><th style="text-align:right">Open</th></tr></thead>
         <tbody>
           <tr><td><div style="font-weight:600">Base model</div><div class="mono" style="font-size:.75rem;color:var(--fg-dim)">closed book</div></td>
             <td><span class="dot" style="background:var(--accent-3);display:inline-block"></span> A · gemma-2-2b-it</td>
-            <td class="num">3.98</td><td style="text-align:right"><a class="badge mcell" href="https://harman-ygo-base.vercel.app" target="_blank" rel="noreferrer">open ↗</a></td></tr>
+            <td style="text-align:right"><a class="badge mcell" href="https://harman-ygo-base.vercel.app" target="_blank" rel="noreferrer">open ↗</a></td></tr>
           <tr><td><div style="font-weight:600">+ Fine-tune</div><div class="mono" style="font-size:.75rem;color:var(--fg-dim)">QLoRA · closed</div></td>
             <td><span class="dot" style="background:var(--accent-2);display:inline-block"></span> B · Yu-Gi-Oh QA</td>
-            <td class="num">5.25</td><td style="text-align:right"><a class="badge mcell" href="https://harman-ygo-finetune.vercel.app" target="_blank" rel="noreferrer">open ↗</a></td></tr>
+            <td style="text-align:right"><a class="badge mcell" href="https://harman-ygo-finetune.vercel.app" target="_blank" rel="noreferrer">open ↗</a></td></tr>
           <tr><td><div style="font-weight:600">+ Retrieval</div><div class="mono" style="font-size:.75rem;color:var(--fg-dim)">RAG · winner</div></td>
             <td><span class="dot" style="background:var(--accent);display:inline-block"></span> C · Yu-Gi-Oh RAG</td>
-            <td class="num">8.05</td><td style="text-align:right"><a class="badge mcell" href="https://harman-ygo-rag.vercel.app" target="_blank" rel="noreferrer">open ↗</a></td></tr>
+            <td style="text-align:right"><a class="badge mcell" href="https://harman-ygo-rag.vercel.app" target="_blank" rel="noreferrer">open ↗</a></td></tr>
         </tbody>
       </table></div>
     </div>
@@ -319,15 +319,15 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
   <section class="section tabpanel" id="cost" style="margin-top:0">
     <div class="panel card" style="overflow-x:auto">
       <span class="tag">Cost to build</span>
-      <h2 style="margin-top:6px">What this cost · $3.36 of a $25 budget</h2>
+      <h2 style="margin-top:6px">What this cost · $3.26 of a $25 budget</h2>
       <p style="margin:6px 0 20px">Two bills built this: <strong>Modal</strong> for the GPU training, and the
         <strong>Gemini API</strong> for generating the QA data and running the judge. The base is Google's (imported free);
         the retriever, serving and evaluation all ran on a local RTX 3060, so they cost nothing.</p>
       <div class="statgrid" style="margin-bottom:22px">
-        <div class="panel stat"><div class="value mono">$0.36</div><div class="tag label">Modal · GPU</div></div>
+        <div class="panel stat"><div class="value mono">$0.26</div><div class="tag label">Modal · GPU</div></div>
         <div class="panel stat"><div class="value mono">$3.00</div><div class="tag label">Gemini API</div></div>
         <div class="panel stat"><div class="value mono">$0</div><div class="tag label">Local GPU</div></div>
-        <div class="panel stat"><div class="value mono">$3.36</div><div class="tag label">Total</div></div>
+        <div class="panel stat"><div class="value mono">$3.26</div><div class="tag label">Total</div></div>
       </div>
       <table style="min-width:600px">
         <thead><tr><th>Bill</th><th style="text-align:right">Cost</th><th></th><th style="text-align:right">Share</th></tr></thead>
@@ -363,8 +363,8 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
     ["C · fine-tune + retrieval","--accent",8.25,4.03,1.58,1.63,1.00,60]];
   const SPLIT=[["tips",31,"--accent"],["rulings",22,"--accent-2"],["card facts",22,"--accent-3"],
     ["archetype",10,"#c98a2b"],["lore",14,"#8a8f98"],["mechanics",1,"#c05a3a"]];
-  const COSTS=[["Modal · GPU","QLoRA fine-tune — Gemma 2 2B on L4","$0.36",11],
-    ["Gemini API","teacher generation + QA gating + judge","$3.00",89],
+  const COSTS=[["Modal · GPU","QLoRA fine-tune — Gemma 2 2B on L4","$0.26",8],
+    ["Gemini API","teacher generation + QA gating + judge","$3.00",92],
     ["Local · RTX 3060","retriever build + serving + eval","$0",0]];
 
   // theme picker (conic swatches, slm-theme, no-flash handled inline in <head>)
@@ -407,7 +407,7 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
      <td class="num" style="font-weight:600">${c}</td>
      <td style="width:130px"><div class="scorebar"><div style="width:${pct}%;height:100%;background:var(--accent)"></div></div></td>
      <td class="num" style="color:var(--fg-muted)">${pct}%</td></tr>`).join('')
-     +`<tr><td style="font-weight:700">Total invoiced</td><td class="num" style="font-weight:700">$3.36</td><td></td><td class="num" style="color:var(--fg-muted)">100%</td></tr>`;
+     +`<tr><td style="font-weight:700">Total invoiced</td><td class="num" style="font-weight:700">$3.26</td><td></td><td class="num" style="color:var(--fg-muted)">100%</td></tr>`;
 
   // ask + question dropdown (grouped by category) + live AI judge
   const qEl=document.getElementById('q'), badge=document.getElementById('badge'), go=document.getElementById('go'),

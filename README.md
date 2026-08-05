@@ -293,14 +293,14 @@ Each part lists its **prerequisites**, the **process**, and the **outcome** you 
 
 ## 10. Cost to build
 
-**$3.36** of a $25 budget — measured, not estimated:
+**$3.26** of a $25 budget — measured, not estimated:
 
 | Bill | Detail | Cost |
 |------|--------|-----:|
-| Modal · GPU | the QLoRA fine-tune (Gemma 2 2B on an L4) | $0.36 |
+| Modal · GPU | the QLoRA fine-tune (Gemma 2 2B on an L4) | $0.26 |
 | Gemini API | teacher generation + QA gating + judging | $3.00 |
 | Local · RTX 3060 | retriever build + serving + evaluation | $0 |
-| **Total** | | **$3.36** |
+| **Total** | | **$3.26** |
 
 The base model is Google's (imported free); retrieval, serving and evaluation all run on a local GPU, so
 the only real spend is a little L4 time and a lot of cheap teacher/judge calls.
