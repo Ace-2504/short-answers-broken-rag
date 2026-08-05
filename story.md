@@ -397,6 +397,54 @@ their correct model (base → `google/gemma-2-2b-it`, B → `-qa`, C → `-rag`)
 the GitHub README directly (4 commits) — rebased onto his version, kept his wording, re-applied only the
 RAG link. Pushed `786bf4a`. → *Better: both trained variants are first-class HF entries.*
 
+**E49 · Arena upgrade — live judging + categorized dropdown, and the full repo goes public.** Added a
+`/judge` endpoint to `serve_local.py` (the eval's reference-grounded rubric, live) and rebuilt the arena
+ask box into a **category dropdown** of 20 teacher-generated questions that ship with gold+evidence (so the
+live judge grades against a reference), plus a free-text box (graded from the judge's own knowledge). Also:
+left-aligned the hero + a plain-language Yu-Gi-Oh intro; scoped the individual "what this is" text to `#000`
+on parchment only (theme-aware elsewhere); made the corpus section identical arena↔individual; removed every
+"class"-comparison reference (docs, MODEL_CARD, report, dossier); and **un-ignored the process files so the
+full project is on GitHub** (68 files — docs/, story.md, report/, chunking_study/, finetune/pilot/,
+frontends/), keeping only costs.md / PLAN.md / agent-prompt.md + heavy/© data out. → *Better: the demo
+judges live and the repo tells the whole story.*
+
+**E50 · README → full portfolio README.** Drafted `readmeV2.md` (contents, intro, live demos, architecture
+diagram, corpus, judge, findings, detailed Prerequisites→Process→Outcome reproduce, cost, limitations) and,
+on approval, made it the real `README.md`.
+
+**E51 · Report tweaks.** Added a "What I learnt" section (reader-ceiling · reference-grounded judge ·
+match-the-retriever-to-the-domain), then removed the bottom footer line at Harman's request.
+
+**E52 · Repo renamed.** `Ace-2504/ygo-slms` → **`Ace-2504/does-my-ai-know-yugioh`** (curiosity + SEO); all
+in-repo GitHub links updated, sites redeployed; confirmed repo SEO needs no framework change.
+
+**E53 · Analysis pass (re-reviewable artifacts).** Re-ran the 12-question base-ignorance probe → **3/12**
+(orig ~1.5), saved per-question to `docs/verification/base-probe-results.md`. Ran a **separate eval on the
+20 arena dropdown questions** → A 2.05 / B 2.55 / C 8.30; fine-tuning *not* significant here (+0.50, the set
+is fact-lookup-heavy) while retrieval wins bigger (+5.75) — a cleaner cut of "shape not facts"
+(`eval/arena-eval-results.md`, local). Documented the **held-out composition** in DATA.md (45% cardfacts /
+45% rulings / 8% archetype / 2% mechanics — the bias behind the original 60). Explained with data that the
+fine-tune answers short because **100% of its training answers are <40 words (median 17)** — not truncation
+— and that System C's 8.05 ceiling is the reader, not the retriever (recall@5 already 0.93).
+
+**E54 · 60 equal-split questions generated, then the leaderboard paused.** Generated **60 equal-split
+arena questions (15/category)** (`.run/arena_questions.json`) to grade A/B/C for a balanced second
+leaderboard alongside the biased original-60 — but Harman paused the eval before it ran. The 60 are staged
+locally only; the deployed arena still shows the 20-question dropdown. (Not run, not deployed.)
+
+**E55 · Prompt-tweak experiment on System C's short answers (Blackwing) — a clean negative result.**
+Tested whether a "be complete" instruction fixes the fine-tune's terse answers, on *"what is the effect of
+Blackwing Full Armor Master?"* (original C: 27 words, 6/10, omits the effect): **(a)** mild "answer fully"
+→ 30 words, **5/10**, ignored; **(b)** strong directive that *named* the mechanics (Wedge Counters, take
+control, destroy) → 49 words, **8/10** — but that leaks the answer into the prompt, unusable in production;
+**(c)** generic strong push ("say everything it does", no hints) → 42 words, **3/10** — **backfired**: forced
+to write more, the 2.6B model *fabricated* (invented Normal Summon / Simoon), groundedness → 0. Conclusion:
+**prompting can't fix it** — the brevity is protective (short = grounded); forcing length without content
+makes a small model hallucinate. Real fixes are retraining on longer gold answers or a bigger model. →
+*Better: the short-answer question is now answered with data, and a cheap "fix" was ruled out honestly.*
+
+## Current status (as of last entry)
+
 ## Current status (as of last entry)
 
 - **Corpus collected:** Yugipedia prose 21.43 MB (11,944 pages) + card-facts 6.04 MB (14,477 cards)
