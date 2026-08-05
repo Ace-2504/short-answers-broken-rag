@@ -1,7 +1,7 @@
 # Yu-Gi-Oh SLM — Fine-tune vs. Retrieval
 
-Reproducing the course experiment on a new domain (Yu-Gi-Oh! rulings & card facts): does fine-tuning
-a small model on Q&A pairs teach it *facts*, or only the *shape* of an answer — and how much does
+Reproducing the case laws experiment on a new domain (Yu-Gi-Oh! rulings & card facts): does fine-tuning
+a small model on Q&A pairs teach it *facts*, or only the *shape* of an answer, and how much does
 retrieval add on top? Three systems, one held-out set, a reference-grounded judge.
 
 | System | What it is |
@@ -18,9 +18,8 @@ retrieval add on top? Three systems, one held-out set, a reference-grounded judg
 | B fine-tune, closed | 5.25 ± 0.54 | **+1.27**, p = 0.007 (significant) |
 | C fine-tune + retrieval | **8.05 ± 0.42** | **+2.80**, p < 0.001 (significant) |
 
-**What we found (and it partly disagrees with the class reference):** retrieval is the decisive win
-(C ≫ B). But fine-tuning *also* significantly beat base closed-book (B > A) — where the reference found
-it did not. The gain is concentrated in **groundedness** (0.18 → 0.87), i.e. answer *shape*, not facts
+**What we found:** retrieval is the decisive win
+(C ≫ B). But fine-tuning *also* significantly beat base closed-book (B > A). The gain is concentrated in **groundedness** (0.18 → 0.87), i.e. answer *shape*, not facts
 (the facts arrive only with retrieval — correctness rises 2.35 → 3.85 only when retrieval is on). So
 "fine-tuning teaches shape, not facts" still holds; it just mattered more here. Full write-up in
 [`report.pdf`](report.pdf).
@@ -29,14 +28,10 @@ it did not. The gain is concentrated in **groundedness** (0.18 → 0.87), i.e. a
 
 - **Model (HF Hub):** https://huggingface.co/Ace-2504/gemma-2-2b-yugioh-qa
 - **Live site (Vercel):** https://harman-ygo-slm.vercel.app
-- **Endpoints** (cloudflared tunnel to the local RTX 3060 — must be running for the live site):
-  - `/ask` (all three systems + C's passages, one call): `https://tennis-frost-biology-presidential.trycloudflare.com/ask`
-  - `/generate` (base via `use_base`, and fine-tune): same server, `…/generate`
-  - `/retrieve` (top-k chunks + scores + source): `http://localhost:8200/retrieve` (internal; called by `/ask`)
+- **Endpoints** (cloudflared tunnel to a local RTX 3060):
 
-  > The tunnel URL is ephemeral (regenerated on restart). If the live site can't reach the model,
-  > restart the servers + tunnel and update `ENDPOINT` in `site/index.html`, then redeploy.
-- **Total cost:** **$2.36** of the $25 budget — Modal GPU **$0.36** (the QLoRA fine-tune) + Gemini API
+## Total cost 
+  **$2.36** of the $25 budget — Modal GPU **$0.36** (the QLoRA fine-tune) + Gemini API
   **$2.00** (teacher generation, QA gating and judging); the retriever, serving and evaluation all ran
   on a local RTX 3060 (free).
 
@@ -45,7 +40,7 @@ it did not. The gain is concentrated in **groundedness** (0.18 → 0.87), i.e. a
 - **Corpus:** Yugipedia prose (CC BY-SA 4.0, attributed) + YGOPRODeck card facts (free; card text used
   only as labeled fair-use context). 20.7 MB free prose + 14,477 card-fact passages.
 - **Fine-tune:** QLoRA (rank 16 / alpha 32, all linear target modules, LR 2e-4 cosine, seq 512, bf16)
-  on Modal **L4**; early-stopped ~1 epoch (3 epochs overfit). Validation perplexity **3.87** (ref 4.26).
+  on Modal **L4**; early-stopped ~1 epoch (3 epochs overfit). Validation perplexity **3.87**.
 - **Retriever:** **all-MiniLM-L6-v2** embeddings in a **FAISS flat + BM25 hybrid (RRF)**, top-5, over
   42,412 chunks (1000/150, title-augmented). Flat index is fine at this scale.
 - **Teacher / judge:** Gemini flash-lite. **Stats:** paired bootstrap CI + t-test + Wilcoxon.
