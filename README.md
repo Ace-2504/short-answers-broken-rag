@@ -9,9 +9,16 @@
 **[Model — RAG](https://huggingface.co/Ace-2504/gemma-2-2b-yugioh-rag)** ·
 **[one-page report](report.pdf)**
 
+> ### ★ Featured — [**The RAG Study**](RAG-STUDY.md)  ·  *the big follow-up result*
+> Once retrieval works, **is the retriever or the reader the real bottleneck?** Six experiments say the
+> **reader** — and that retrieval-side tuning (reranking, deeper retrieval, chunk-repair) buys nothing once
+> recall is already high.  **→ [Read the RAG study](RAG-STUDY.md).**
+
 ---
 
 ## Contents
+
+★ **[The RAG Study — the big follow-up result](RAG-STUDY.md)** — *is retrieval or the reader the bottleneck?*
 
 1. [What this is](#1-what-this-is)
 2. [Try it live](#2-try-it-live)

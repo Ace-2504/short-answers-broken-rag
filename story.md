@@ -443,6 +443,42 @@ to write more, the 2.6B model *fabricated* (invented Normal Summon / Simoon), gr
 makes a small model hallucinate. Real fixes are retraining on longer gold answers or a bigger model. →
 *Better: the short-answer question is now answered with data, and a cheap "fix" was ruled out honestly.*
 
+**E56 · Power-cut recovery + tunnel rotation.** After a power cut, restarted the model server (`:8100`),
+retriever (`:8200`), and the cloudflared tunnel — which rotated to
+`latinas-kennedy-exams-intervention.trycloudflare.com`. Updated `BASE` in `site/index.html` +
+`frontends/build.py` and redeployed all four Vercel sites; verified `harman-ygo-{slm,base,finetune,rag}`
+are 200 and now point at the live tunnel. → *Better: the live demos work again; only the ephemeral tunnel
+URL changed, nothing else in main.*
+
+---
+
+> ### The RAG study — **the following experiments were conducted in a *cloned* repo**
+> (`vizuara-assignment-3-yugioh-test`), leaving this repository's code untouched. They ask whether System C's
+> 8.05 ceiling is the retriever or the reader. Full writeup: [`RAG-STUDY.md`](RAG-STUDY.md); summarized here
+> for the record.
+
+**Clone-C1 · Reranking (cross-encoder, top-20 → 5).** No help — slightly worse: biased-60 **8.05 → 7.55**,
+equal-split-60 **8.25 → 7.37**. Debug: recall@5 identical (0.933), gold at **rank 1** either way, so the
+reranker isn't mis-ranking — the drop is reader instability on reshuffled context.
+
+**Clone-C2 · "Look deeper" / wider retrieval pool.** Recall rose **0.93 → 0.95 → 0.97**, but the score stayed
+flat. Recall ≠ answer quality.
+
+**Clone-C3 · Chunk-truncation fix (adjacent-chunk expansion ±2).** A card's effect split across chunks
+(Endymion) was reconstructed back into the context — **and the answer stayed incomplete** (the reader ignored
+the recovered clause). The bug affects only 0.2% of cards.
+
+**Clone-C4 · Six non-retraining reader fixes (Blackwing + Endymion).** Self-consistency, self-verification,
+and quote-then-answer all failed; the only reliable win was **a stronger reader on the same context → 6/10 to
+10/10** — the controlled "hold context, change reader" confirmation.
+
+**Clone-C5 · Reviewed 8 papers on small-model RAG.** They converge: the reader is the bottleneck; retrieval
+and prompt tricks don't fix it; preference-tuned RAFT or a stronger reader do.
+
+**RAG-study conclusion:** retrieval is *not* the bottleneck — once recall is high, reranking / deeper
+retrieval / chunk-repair each improve retrieval yet add zero answer quality; the **2.6B reader is the
+ceiling.** Full narrative + numbers in the clone's `docs/rag-improvement-story.md` (local).
+
 ## Current status (as of last entry)
 
 ## Current status (as of last entry)

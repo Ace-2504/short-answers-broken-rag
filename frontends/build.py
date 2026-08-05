@@ -14,7 +14,7 @@ ONE place to change the tunnel: edit BASE below.
 import os, re, sys, json, subprocess, pathlib
 
 # ---- the ONE source of truth for the live inference endpoint ----
-BASE = "https://university-hindu-excel-welding.trycloudflare.com"
+BASE = "https://latinas-kennedy-exams-intervention.trycloudflare.com"
 
 HERE = pathlib.Path(__file__).parent
 REPO = HERE.parent
