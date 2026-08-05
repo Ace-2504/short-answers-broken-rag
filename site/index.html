@@ -102,7 +102,7 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
   <nav class="nav">
     <span class="tag">SLM Engineering</span>
     <div class="navright">
-      <a class="gh" href="https://github.com/Ace-2504/does-my-ai-know-yugioh" target="_blank" rel="noreferrer" title="Source on GitHub">
+      <a class="gh" href="https://github.com/Ace-2504/short-answers-broken-rag" target="_blank" rel="noreferrer" title="Source on GitHub">
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub
       </a>
       <div class="picker" id="picker" role="radiogroup" aria-label="Color theme"></div>
@@ -217,14 +217,6 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
           <th style="text-align:right">Correct /5</th><th style="text-align:right">Compl /2</th><th style="text-align:right">Ground /2</th><th style="text-align:right">Clarity /1</th><th style="text-align:right">n</th></tr></thead>
         <tbody id="lb"></tbody>
       </table>
-      <div class="panel-inset" style="margin-top:18px;padding:14px 16px;border-left:3px solid var(--accent-2);line-height:1.6;font-size:.88rem">
-        <span class="tag" style="color:var(--accent-2)">Paired significance</span>
-        <table style="margin-top:8px;min-width:520px"><thead><tr><th>Contrast</th><th style="text-align:right">Δ mean</th><th style="text-align:right">95% CI</th><th style="text-align:right">t p</th><th style="text-align:right">Wilcoxon p</th><th style="text-align:right">Verdict</th></tr></thead>
-          <tbody>
-            <tr><td>A → B &nbsp;<span class="mono" style="color:var(--fg-dim)">fine-tuning</span></td><td class="num" style="color:var(--accent)">+1.27</td><td class="num">[0.42, 2.17]</td><td class="num">0.007</td><td class="num">0.012</td><td class="num" style="color:var(--accent)">significant</td></tr>
-            <tr><td>B → C &nbsp;<span class="mono" style="color:var(--fg-dim)">retrieval</span></td><td class="num" style="color:var(--accent)">+2.80</td><td class="num">[1.72, 3.87]</td><td class="num">&lt;0.001</td><td class="num">&lt;0.001</td><td class="num" style="color:var(--accent)">significant</td></tr>
-          </tbody></table>
-      </div>
 
       <h3 style="margin-top:26px">Unbiased · equal-split 60 (15 per category)</h3>
       <div class="panel-inset" style="margin:6px 0 12px;padding:12px 16px;border-left:3px solid var(--accent);line-height:1.6;font-size:.88rem">
@@ -235,13 +227,21 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
           niche-fact categories they never learned — so retrieval's advantage is even larger.</p>
       </div>
       <table style="min-width:640px">
-        <thead><tr><th>System</th><th style="text-align:right">Mean /10</th><th style="text-align:right">Correct /5</th><th style="text-align:right">Compl /2</th><th style="text-align:right">Ground /2</th><th style="text-align:right">Clarity /1</th><th style="text-align:right">n</th></tr></thead>
-        <tbody>
-          <tr><td>A · base, closed</td><td class="num">1.93</td><td class="num">0.57</td><td class="num">0.32</td><td class="num">0.07</td><td class="num">0.98</td><td class="num">60</td></tr>
-          <tr><td>B · fine-tune, closed</td><td class="num">2.62</td><td class="num">0.87</td><td class="num">0.40</td><td class="num">0.35</td><td class="num">1.00</td><td class="num">60</td></tr>
-          <tr><td><span style="color:var(--accent)">C · fine-tune + retrieval</span></td><td class="num">8.25</td><td class="num">4.03</td><td class="num">1.58</td><td class="num">1.63</td><td class="num">1.00</td><td class="num">60</td></tr>
-        </tbody>
+        <thead><tr><th>#</th><th>System</th><th style="text-align:right">Mean /10</th><th></th>
+          <th style="text-align:right">Correct /5</th><th style="text-align:right">Compl /2</th><th style="text-align:right">Ground /2</th><th style="text-align:right">Clarity /1</th><th style="text-align:right">n</th></tr></thead>
+        <tbody id="lb2"></tbody>
       </table>
+
+      <div class="panel-inset" style="margin-top:20px;padding:14px 16px;border-left:3px solid var(--accent-2);line-height:1.6;font-size:.88rem">
+        <span class="tag" style="color:var(--accent-2)">Paired significance · both evaluations</span>
+        <table style="margin-top:8px;min-width:640px"><thead><tr><th>Set</th><th>Contrast</th><th style="text-align:right">Δ mean</th><th style="text-align:right">95% CI</th><th style="text-align:right">t p</th><th style="text-align:right">Wilcoxon p</th><th style="text-align:right">Verdict</th></tr></thead>
+          <tbody>
+            <tr><td>Biased 60</td><td>A → B &nbsp;<span class="mono" style="color:var(--fg-dim)">fine-tuning</span></td><td class="num" style="color:var(--accent)">+1.27</td><td class="num">[0.42, 2.17]</td><td class="num">0.007</td><td class="num">0.012</td><td class="num" style="color:var(--accent)">significant</td></tr>
+            <tr><td>Biased 60</td><td>B → C &nbsp;<span class="mono" style="color:var(--fg-dim)">retrieval</span></td><td class="num" style="color:var(--accent)">+2.80</td><td class="num">[1.72, 3.87]</td><td class="num">&lt;0.001</td><td class="num">&lt;0.001</td><td class="num" style="color:var(--accent)">significant</td></tr>
+            <tr><td>Unbiased 60</td><td>A → B &nbsp;<span class="mono" style="color:var(--fg-dim)">fine-tuning</span></td><td class="num" style="color:var(--accent)">+0.68</td><td class="num">[0.07, 1.33]</td><td class="num">0.041</td><td class="num">0.042</td><td class="num" style="color:var(--accent)">significant</td></tr>
+            <tr><td>Unbiased 60</td><td>B → C &nbsp;<span class="mono" style="color:var(--fg-dim)">retrieval</span></td><td class="num" style="color:var(--accent)">+5.63</td><td class="num">[4.63, 6.58]</td><td class="num">&lt;0.001</td><td class="num">&lt;0.001</td><td class="num" style="color:var(--accent)">significant</td></tr>
+          </tbody></table>
+      </div>
       <h3 style="margin-top:22px">Retriever · recall@k on the 60 held-out</h3>
       <table style="min-width:420px"><thead><tr><th>Method</th><th style="text-align:right">@1</th><th style="text-align:right">@3</th><th style="text-align:right">@5</th><th style="text-align:right">@10</th></tr></thead>
         <tbody>
@@ -344,7 +344,7 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
     <div class="badge-line">Built &amp; evaluated by Harman Sandhu</div>
     <div class="src">Small language models · live generation, judged by Gemini ·
       <a href="https://huggingface.co/Ace-2504/gemma-2-2b-yugioh-qa" target="_blank" rel="noreferrer">HuggingFace</a> ·
-      <a href="https://github.com/Ace-2504/does-my-ai-know-yugioh" target="_blank" rel="noreferrer">GitHub</a></div>
+      <a href="https://github.com/Ace-2504/short-answers-broken-rag" target="_blank" rel="noreferrer">GitHub</a></div>
   </footer>
 </div>
 
@@ -358,6 +358,9 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
   const LB=[["A · base, closed","--accent-3",3.98,1.83,0.97,0.18,1.00,60],
     ["B · fine-tune, closed","--accent-2",5.25,2.35,1.03,0.87,1.00,60],
     ["C · fine-tune + retrieval","--accent",8.05,3.85,1.55,1.65,1.00,60]];
+  const LB2=[["A · base, closed","--accent-3",1.93,0.57,0.32,0.07,0.98,60],
+    ["B · fine-tune, closed","--accent-2",2.62,0.87,0.40,0.35,1.00,60],
+    ["C · fine-tune + retrieval","--accent",8.25,4.03,1.58,1.63,1.00,60]];
   const SPLIT=[["tips",31,"--accent"],["rulings",22,"--accent-2"],["card facts",22,"--accent-3"],
     ["archetype",10,"#c98a2b"],["lore",14,"#8a8f98"],["mechanics",1,"#c05a3a"]];
   const COSTS=[["Modal · GPU","QLoRA fine-tune — Gemma 2 2B on L4","$0.36",15],
@@ -381,14 +384,16 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
 
   // leaderboard rows with score pill + bar
   const sc=s=>`hsl(${Math.round(s*12)} 62% 42%)`;
-  document.getElementById('lb').innerHTML=LB.map((r,i)=>{
+  const lbRow=(r,i)=>{
     const [name,col,mean,cor,com,gr,cl,n]=r;
     return `<tr><td class="num" style="color:var(--fg-dim)">${i+1}</td>
       <td><span class="dot" style="background:var(${col});display:inline-block"></span> ${name}</td>
       <td style="text-align:right"><span class="mono" style="font-weight:700;color:#fff;background:${sc(mean)};border-radius:7px;padding:3px 9px;display:inline-block;min-width:54px;text-align:center">${mean.toFixed(2)}</span></td>
       <td style="width:110px"><div class="scorebar"><div style="width:${mean*10}%;height:100%;background:${sc(mean)}"></div></div></td>
       <td class="num">${cor.toFixed(2)}</td><td class="num">${com.toFixed(2)}</td><td class="num">${gr.toFixed(2)}</td><td class="num">${cl.toFixed(2)}</td>
-      <td class="num" style="color:var(--fg-dim)">${n}</td></tr>`; }).join('');
+      <td class="num" style="color:var(--fg-dim)">${n}</td></tr>`; };
+  document.getElementById('lb').innerHTML=LB.map(lbRow).join('');
+  document.getElementById('lb2').innerHTML=LB2.map(lbRow).join('');
 
   // corpus split bar
   const sb=document.getElementById('splitbar'), lg=document.getElementById('legend');
