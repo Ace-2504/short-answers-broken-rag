@@ -36,8 +36,9 @@ it did not. The gain is concentrated in **groundedness** (0.18 → 0.87), i.e. a
 
   > The tunnel URL is ephemeral (regenerated on restart). If the live site can't reach the model,
   > restart the servers + tunnel and update `ENDPOINT` in `site/index.html`, then redeploy.
-- **Total cost:** ≈ **$3** of the $25 budget — Modal L4 training ~$0.60, all Gemini (teacher + judge)
-  calls < $2, retriever build + eval ran on the local GPU (free).
+- **Total cost:** **$2.36** of the $25 budget — Modal GPU **$0.36** (the QLoRA fine-tune) + Gemini API
+  **$2.00** (teacher generation, QA gating and judging); the retriever, serving and evaluation all ran
+  on a local RTX 3060 (free).
 
 ## Stack
 

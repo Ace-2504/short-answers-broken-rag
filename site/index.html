@@ -283,21 +283,23 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
   <section class="section tabpanel" id="cost" style="margin-top:0">
     <div class="panel card" style="overflow-x:auto">
       <span class="tag">Cost to build</span>
-      <h2 style="margin-top:6px">What this cost · ≈ $3 of a $25 budget</h2>
-      <p style="margin:6px 0 20px">Two bills: <strong>Modal</strong> for the GPU training, and the <strong>Gemini API</strong>
-        for generating the QA data and running the judge. The base is Google's (free); retrieval, serving and eval ran on a local RTX 3060.</p>
+      <h2 style="margin-top:6px">What this cost · $2.36 of a $25 budget</h2>
+      <p style="margin:6px 0 20px">Two bills built this: <strong>Modal</strong> for the GPU training, and the
+        <strong>Gemini API</strong> for generating the QA data and running the judge. The base is Google's (imported free);
+        the retriever, serving and evaluation all ran on a local RTX 3060, so they cost nothing.</p>
       <div class="statgrid" style="margin-bottom:22px">
-        <div class="panel stat"><div class="value mono" id="c-modal">&lt; $0.60</div><div class="tag label">Modal · GPU</div></div>
-        <div class="panel stat"><div class="value mono" id="c-gemini">&lt; $2.00</div><div class="tag label">Gemini API</div></div>
+        <div class="panel stat"><div class="value mono">$0.36</div><div class="tag label">Modal · GPU</div></div>
+        <div class="panel stat"><div class="value mono">$2.00</div><div class="tag label">Gemini API</div></div>
         <div class="panel stat"><div class="value mono">$0</div><div class="tag label">Local GPU</div></div>
-        <div class="panel stat"><div class="value mono" id="c-total">≈ $3</div><div class="tag label">Total</div></div>
+        <div class="panel stat"><div class="value mono">$2.36</div><div class="tag label">Total</div></div>
       </div>
       <table style="min-width:600px">
-        <thead><tr><th>Stage</th><th style="text-align:right">Cost</th><th></th><th style="text-align:right">Share</th></tr></thead>
+        <thead><tr><th>Bill</th><th style="text-align:right">Cost</th><th></th><th style="text-align:right">Share</th></tr></thead>
         <tbody id="costbody"></tbody>
       </table>
-      <p style="color:var(--fg-dim);font-size:.85rem;margin-top:14px;line-height:1.6" id="costnote">Figures are best estimates
-        (Modal L4 time × rate + ~9k Gemini calls). Exact invoiced Modal + Gemini totals can be dropped in — see the note below the site.</p>
+      <p style="color:var(--fg-dim);font-size:.85rem;margin-top:14px;line-height:1.6">Modal is the invoiced GPU total for
+        the fine-tune; Gemini is the combined API spend for teacher generation, QA gating and judging. We don't attribute a
+        per-stage split inside those two bills — only the totals are measured.</p>
     </div>
   </section>
 
@@ -311,7 +313,7 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
 </div>
 
 <script>
-  const BASE = "https://stroke-valve-easter-sampling.trycloudflare.com";
+  const BASE = "https://university-hindu-excel-welding.trycloudflare.com";
   const ENDPOINT = BASE + "/ask";
   const EXAMPLES = ["What is the ATK of Sky Striker Ace - Raye?","Does Effect Veiler stop a Graveyard effect?",
     "Can you activate a normal Spell in the Damage Step?","What two monster types make up the Kozmo archetype?"];
@@ -323,9 +325,9 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
     ["C · fine-tune + retrieval","--accent",8.05,3.85,1.55,1.65,1.00,60]];
   const SPLIT=[["tips",31,"--accent"],["rulings",22,"--accent-2"],["card facts",22,"--accent-3"],
     ["archetype",10,"#c98a2b"],["lore",14,"#8a8f98"],["mechanics",1,"#c05a3a"]];
-  const COSTS=[["Teacher QA generation","< $0.70",23],["QA quality gating","< $0.50",17],
-    ["QLoRA fine-tune (Modal L4)","< $0.60",20],["Evaluation (judge)","< $0.30",10],
-    ["Retriever + serving + eval (local)","$0",0]];
+  const COSTS=[["Modal · GPU","QLoRA fine-tune — Gemma 2 2B on L4","$0.36",15],
+    ["Gemini API","teacher generation + QA gating + judge","$2.00",85],
+    ["Local · RTX 3060","retriever build + serving + eval","$0",0]];
 
   // theme picker (conic swatches, slm-theme, no-flash handled inline in <head>)
   const root=document.documentElement, picker=document.getElementById('picker');
@@ -360,11 +362,12 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
     lg.insertAdjacentHTML('beforeend',`<span><i style="background:${col}"></i>${lab} ${pct}%</span>`); });
 
   // cost table
-  document.getElementById('costbody').innerHTML=COSTS.map(([s,c,pct])=>
-    `<tr><td>${s}</td><td class="num" style="font-weight:600">${c}</td>
+  document.getElementById('costbody').innerHTML=COSTS.map(([s,det,c,pct])=>
+    `<tr><td><div style="font-weight:600">${s}</div><div style="color:var(--fg-muted);font-size:.85rem;margin-top:2px">${det}</div></td>
+     <td class="num" style="font-weight:600">${c}</td>
      <td style="width:130px"><div class="scorebar"><div style="width:${pct}%;height:100%;background:var(--accent)"></div></div></td>
      <td class="num" style="color:var(--fg-muted)">${pct}%</td></tr>`).join('')
-     +`<tr><td style="font-weight:700">Total</td><td class="num" style="font-weight:700">≈ $3.00</td><td></td><td class="num" style="color:var(--fg-muted)">100%</td></tr>`;
+     +`<tr><td style="font-weight:700">Total invoiced</td><td class="num" style="font-weight:700">$2.36</td><td></td><td class="num" style="color:var(--fg-muted)">100%</td></tr>`;
 
   // ask
   const chips=document.getElementById('chips'), qEl=document.getElementById('q'), badge=document.getElementById('badge'), go=document.getElementById('go');

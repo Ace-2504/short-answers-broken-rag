@@ -163,4 +163,4 @@ Yu-Gi-Oh card pool up to that date; cards printed after it are out of scope.
 
 ## Cost
 
-Data-stage spend (teacher generation + gating API calls) is part of the ≈ $3 total broken down in the repo `README.md`.
+Data-stage spend (teacher generation + gating API calls) is part of the **$2.36** total ($0.36 Modal + $2.00 Gemini API) broken down in the repo `README.md`.
