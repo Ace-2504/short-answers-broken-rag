@@ -64,7 +64,7 @@ report.pdf   the one-page report
 py -3.12 -m venv .venv
 .venv/Scripts/python.exe -m pip install -r requirements.txt
 .venv/Scripts/hf.exe auth login --force        # WRITE token (gated Gemma + Hub push)
-.venv/Scripts/modal.exe token new
+.venv/Scripts/modal.exe token new               # for GPU training
 setx GEMINI_API_KEY <key>                       # teacher + judge
 
 # 1. corpus (Part 1) — collect, then clean
