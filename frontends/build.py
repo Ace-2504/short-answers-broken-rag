@@ -204,10 +204,6 @@ TEMPLATE = """<!doctype html>
     <span class="tag" style="color:var(--accent)">%%ROLE%%</span>
     <h1>%%H1%%</h1>
     <p class="lead">%%LEAD%%</p>
-    <div class="herobtns">
-      <a class="btn" href="%%HF%%" target="_blank" rel="noreferrer">%%HFLABEL%%</a>
-      <a class="btn" href="%%COMBINED%%" target="_blank" rel="noreferrer">Compare all three →</a>
-    </div>
   </header>
 
   <div class="lineage">%%LINEAGE%%</div>
