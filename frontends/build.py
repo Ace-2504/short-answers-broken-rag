@@ -156,6 +156,7 @@ td{padding:9px 10px;border-top:1px solid var(--border-soft);}td.num{text-align:r
 .section h2{font-size:1.2rem;margin:6px 0 10px;font-weight:600;}.section h3{font-size:1.02rem;font-weight:600;margin:6px 0 8px;}
 .section p{color:var(--fg-muted);line-height:1.6;}
 .section p strong,.section p em{color:var(--fg);}
+[data-theme="parchment"] .whatis p{color:#000;}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .splitbar{display:flex;height:24px;border-radius:8px;overflow:hidden;border:1px solid var(--border);margin:10px 0 10px;}
 .splitbar span{display:block;height:100%;}
@@ -225,7 +226,7 @@ TEMPLATE = """<!doctype html>
     %%PASSBLOCK%%
   </div></section>
 
-  <section class="section"><div class="panel card">
+  <section class="section"><div class="panel card whatis">
     <span class="tag">what this is</span>%%BLURB%%
   </div></section>
 
@@ -336,7 +337,7 @@ def build():
     for s in SYSTEMS:
         training = rows_table(s["training"]) if s["training"] else f'<p style="margin-top:10px;color:var(--fg-muted)">{s["train_note"]}</p>'
         stats = "".join(f'<div class="panel stat"><div class="value">{v}</div><div class="tag label">{l}</div></div>' for v, l in s["stats"])
-        blurb = "".join(f'<p style="margin-top:10px;color:#000">{p}</p>' for p in s["blurb"])
+        blurb = "".join(f'<p style="margin-top:10px">{p}</p>' for p in s["blurb"])
         passblock = '<div class="pass" id="passC"></div>' if s["pass_"] else ""
         repl = {"%%GLOBALS%%": GLOBALS, "%%H1%%": s["h1"], "%%LEAD%%": s["lead"], "%%BRAND%%": s["brand"], "%%ROLE%%": s["role"],
                 "%%COMBINED%%": COMBINED_URL, "%%GITHUB%%": GITHUB, "%%GH%%": GH_SVG,

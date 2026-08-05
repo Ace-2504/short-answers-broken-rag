@@ -63,6 +63,7 @@ td{padding:9px 10px;border-top:1px solid var(--border-soft);}td.num{text-align:r
 .section h2{font-size:1.2rem;margin:6px 0 10px;font-weight:600;}.section h3{font-size:1.02rem;font-weight:600;margin:6px 0 8px;}
 .section p{color:var(--fg-muted);line-height:1.6;}
 .section p strong,.section p em{color:var(--fg);}
+[data-theme="parchment"] .whatis p{color:#000;}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .splitbar{display:flex;height:24px;border-radius:8px;overflow:hidden;border:1px solid var(--border);margin:10px 0 10px;}
 .splitbar span{display:block;height:100%;}
@@ -115,8 +116,8 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
     <div class="pass" id="passC"></div>
   </div></section>
 
-  <section class="section"><div class="panel card">
-    <span class="tag">what this is</span><p style="margin-top:10px;color:#000">The winner (+2.80 over the closed fine-tune, p &lt; 0.001). Retrieval supplies the facts the weights never held: correctness climbs 2.35 → 3.85 and groundedness 0.87 → 1.65 — but only once real passages are in the prompt.</p><p style="margin-top:10px;color:#000">The thesis in one screen: <strong>fine-tuning taught the shape, retrieval supplied the facts.</strong> Every answer below shows the passages the retriever fed in.</p>
+  <section class="section"><div class="panel card whatis">
+    <span class="tag">what this is</span><p style="margin-top:10px">The winner (+2.80 over the closed fine-tune, p &lt; 0.001). Retrieval supplies the facts the weights never held: correctness climbs 2.35 → 3.85 and groundedness 0.87 → 1.65 — but only once real passages are in the prompt.</p><p style="margin-top:10px">The thesis in one screen: <strong>fine-tuning taught the shape, retrieval supplied the facts.</strong> Every answer below shows the passages the retriever fed in.</p>
   </div></section>
 
   <section class="section"><div class="grid2">
