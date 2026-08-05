@@ -122,10 +122,5 @@ body("Three things stuck with me. First, **RAG's ceiling is the reader, not the 
      "turn on exact card names that dense embeddings blur, so pairing them with plain keyword search "
      "lifted recall@5 to 0.93 - and that hybrid is what feeds System C.")
 
-# ---- footer ----
-pdf.set_y(-14); pdf.set_draw_color(*LINE); pdf.line(17, pdf.get_y(), 17+W, pdf.get_y())
-pdf.ln(1.5); pdf.set_font("Helvetica", "", 8); pdf.set_text_color(*MUT)
-pdf.cell(0, 4, "Model: huggingface.co/Ace-2504/gemma-2-2b-yugioh-qa    -    total cost ~ $3 of the $25 budget.")
-
 pdf.output("report/report.pdf")
 print("wrote report/report.pdf ; pages:", pdf.page_no())
