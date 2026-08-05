@@ -97,7 +97,18 @@
   footer a{color:var(--fg-muted);}
   .barwrap{margin-top:2px;height:6px;background:var(--bg);border-radius:4px;overflow:hidden;}
   .bar{height:100%;background:var(--accent);border-radius:4px;}
-  @media(max-width:820px){.cols{grid-template-columns:1fr;}section.data{grid-template-columns:1fr;}}
+  .status{margin-top:12px;font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.02em;color:var(--fg-dim);}
+  .status .live{color:var(--accent-2);} .status .down{color:#e0524a;}
+  section.hub{margin-top:34px;}
+  .hubgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;}
+  .hubcard{padding:15px 16px;border:1px solid var(--border);border-radius:12px;background:var(--panel-2);
+    text-decoration:none;color:var(--fg);display:flex;flex-direction:column;gap:9px;}
+  .hubcard:hover{border-color:var(--accent);}
+  .hubcard .hh{display:flex;align-items:center;gap:8px;}
+  .hubcard .hs{margin-left:auto;font-family:ui-monospace,monospace;font-size:13px;color:var(--fg-muted);}
+  .hubcard p{color:var(--fg-muted);font-size:13px;margin:0;flex:1;}
+  .hubcard .open{font-size:12.5px;color:var(--accent);}
+  @media(max-width:820px){.cols{grid-template-columns:1fr;}section.data{grid-template-columns:1fr;}.hubgrid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -122,9 +133,10 @@
     <div class="askrow">
       <input id="q" type="text" placeholder="Ask a Yu-Gi-Oh rules / card question…"
         value="What is the ATK of Sky Striker Ace - Raye?">
-      <button class="btn" id="go">Ask all three</button>
+      <button class="btn" id="go" disabled>Ask all three</button>
     </div>
     <div class="chips" id="chips"></div>
+    <div class="status" id="status">● checking endpoint…</div>
   </div>
 
   <div class="cols">
@@ -176,6 +188,33 @@
     </div>
   </section>
 
+  <section class="hub">
+    <div class="panel" style="padding:18px 20px">
+      <h2 style="font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-muted);margin:0 0 4px;font-weight:600">Explore each system on its own</h2>
+      <p class="sub" style="margin:0">Same live endpoint, one model at a time — each with its own stats, evidence and write-up.</p>
+      <div class="hubgrid">
+        <a class="hubcard" href="https://harman-ygo-base.vercel.app">
+          <div class="hh"><span class="dot" style="background:var(--accent-3)"></span>
+            <span class="sysname">A · Base</span><span class="hs">3.98</span></div>
+          <p>Untouched Gemma 2 2B, closed book — the control that fabricates modern card facts.</p>
+          <span class="open">Open site →</span>
+        </a>
+        <a class="hubcard" href="https://harman-ygo-finetune.vercel.app">
+          <div class="hh"><span class="dot" style="background:var(--accent-2)"></span>
+            <span class="sysname">B · Fine-tune</span><span class="hs">5.25</span></div>
+          <p>QLoRA fine-tune, still closed book — learns the answer shape, not the facts.</p>
+          <span class="open">Open site →</span>
+        </a>
+        <a class="hubcard" href="https://harman-ygo-rag.vercel.app">
+          <div class="hh"><span class="dot" style="background:var(--accent)"></span>
+            <span class="sysname win">C · Fine-tune + retrieval</span><span class="hs">8.05</span></div>
+          <p>The fine-tune with the retriever supplying passages — where the facts arrive. The winner.</p>
+          <span class="open">Open site →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <div class="hairline" style="margin:34px 0 18px"></div>
   <footer>
     Live against real endpoints — every answer is generated on request, every number is from our own
@@ -187,7 +226,7 @@
 
 <script>
   // ---- endpoint (update if the tunnel restarts) ----
-  const ENDPOINT = "https://tennis-frost-biology-presidential.trycloudflare.com/ask";
+  const ENDPOINT = "https://wheat-rangers-leo-ranks.trycloudflare.com/ask";
   const EXAMPLES = [
     "What is the ATK of Sky Striker Ace - Raye?",
     "Does Effect Veiler stop a Graveyard effect?",
@@ -211,8 +250,23 @@
   function setAns(id, text, win){ const s=slot(id); s.className='ans'+(win?' win':''); s.textContent=text; }
   function loading(id){ const s=slot(id); s.className='ans ph'; s.textContent='…thinking'; }
 
+  // ---- endpoint availability: probe on load, gate the button, show status ----
+  const statusEl = document.getElementById('status');
+  let ONLINE = false;
+  function setStatus(ok){
+    ONLINE = ok; document.getElementById('go').disabled = !ok;
+    statusEl.innerHTML = ok
+      ? '<span class="live">● live</span> · answers are generated on request against the real endpoint'
+      : '<span class="down">● demo unavailable</span> — the local model server / tunnel is not reachable right now';
+    if(!ok) ['sysA','sysB','sysC'].forEach(id=>setAns(id,'Demo unavailable — endpoint unreachable.'));
+  }
+  async function probe(){
+    try{ await fetch(ENDPOINT.replace(/\/ask$/,'/'), {method:'GET', signal:AbortSignal.timeout(6000)}); setStatus(true); }
+    catch(e){ setStatus(false); }
+  }
+
   async function ask(){
-    const q = qEl.value.trim(); if(!q) return;
+    const q = qEl.value.trim(); if(!q || !ONLINE) return;
     const btn = document.getElementById('go'); btn.disabled=true;
     ['sysA','sysB','sysC'].forEach(loading); document.getElementById('passC').innerHTML='';
     try{
@@ -230,12 +284,13 @@
           det.appendChild(el); });
       }
     }catch(err){
-      ['sysA','sysB','sysC'].forEach(id=>setAns(id,'⚠ endpoint unreachable — the local server/tunnel may be down.'));
+      setStatus(false);
       console.error(err);
-    }finally{ btn.disabled=false; }
+    }finally{ btn.disabled = !ONLINE; }
   }
   document.getElementById('go').onclick = ask;
   qEl.addEventListener('keydown', e=>{ if(e.key==='Enter') ask(); });
+  probe();
 </script>
 </body>
 </html>

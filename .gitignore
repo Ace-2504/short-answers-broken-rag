@@ -46,7 +46,11 @@ adapter_model*/
 site/node_modules/
 site/.next/
 site/out/
-site/.vercel/
+.vercel/
+
+# ---- Local-only: individual model frontends + runtime server logs (not assignment deliverables) ----
+/frontends/
+/.run/
 
 # ---- OS / editor ----
 .DS_Store
