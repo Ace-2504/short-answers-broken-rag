@@ -26,7 +26,8 @@ retrieval add on top? Three systems, one held-out set, a reference-grounded judg
 
 ## Links
 
-- **Model (HF Hub):** https://huggingface.co/Ace-2504/gemma-2-2b-yugioh-qa
+- **Models (HF Hub):** fine-tune (System B) https://huggingface.co/Ace-2504/gemma-2-2b-yugioh-qa ·
+  fine-tune + retrieval (System C) https://huggingface.co/Ace-2504/gemma-2-2b-yugioh-rag
 - **Live site (Vercel):** https://harman-ygo-slm.vercel.app
 - **Endpoints** (cloudflared tunnel to a local RTX 3060):
 
