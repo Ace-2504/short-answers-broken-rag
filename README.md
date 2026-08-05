@@ -15,8 +15,8 @@ retrieval add on top? Three systems, one held-out set, a reference-grounded judg
 | System | mean ± SE | vs. previous |
 |---|---|---|
 | A base, closed | 3.98 ± 0.39 | — |
-| B fine-tune, closed | 5.25 ± 0.54 | **+1.27**, p = 0.007 (significant) |
-| C fine-tune + retrieval | **8.05 ± 0.42** | **+2.80**, p < 0.001 (significant) |
+| B fine-tune, closed | 5.25 ± 0.54 | **+1.27** (significant) |
+| C fine-tune + retrieval | **8.05 ± 0.42** | **+2.80** (significant) |
 
 **What we found:** retrieval is the decisive win
 (C ≫ B). But fine-tuning *also* significantly beat base closed-book (B > A). The gain is concentrated in **groundedness** (0.18 → 0.87), i.e. answer *shape*, not facts
