@@ -107,3 +107,64 @@ def ask(r: AskReq):
     ctx = "\n\n".join(f"[{p['title']}] {p['text']}" for p in passages)
     c = _gen(r.question, context=ctx, use_base=False) if ctx else "(retriever unavailable)"
     return {"question": r.question, "A": a, "B": b, "C": c, "passages": passages}
+
+# ---- live AI judge (same reference-grounded rubric as the offline eval) ----
+_JUDGE = (
+    "You are grading ONE answer to a Yu-Gi-Oh question. Use ONLY the gold answer and its verbatim "
+    "evidence as ground truth (do not use outside knowledge). Score with this rubric (total 10):\n"
+    "- correctness (0-5): factual agreement with the gold answer\n"
+    "- completeness (0-2): covers the key points of the gold\n"
+    "- groundedness (0-2): consistent with the evidence; SET TO 0 if it invents a citation, figure, "
+    "or card detail not supported by the evidence\n"
+    "- clarity (0-1): clear and well-formed\n"
+    "A correct refusal must score HIGHER than a confident wrong answer. Output ONLY compact JSON: "
+    '{"correctness":int,"completeness":int,"groundedness":int,"clarity":int,"note":"<short>"}\n\n'
+)
+_JUDGE_NOGOLD = (
+    "You are grading ONE answer to a Yu-Gi-Oh question from your own knowledge (there is no written "
+    "answer key). Score total 10: correctness 0-5, completeness 0-2, groundedness 0-2 (invented card "
+    "details -> 0), clarity 0-1. Output ONLY compact JSON: "
+    '{"correctness":int,"completeness":int,"groundedness":int,"clarity":int,"note":"<short>"}\n\n'
+)
+_gclient = None
+def _judge_client():
+    global _gclient
+    if _gclient is None:
+        from google import genai
+        _gclient = genai.Client(api_key=os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY"))
+    return _gclient
+
+def _judge_one(question, gold, evidence, answer):
+    import json as _json
+    if gold:
+        prompt = _JUDGE + f"QUESTION: {question}\nGOLD: {gold}\nEVIDENCE: {evidence}\nANSWER: {answer}\n"
+    else:
+        prompt = _JUDGE_NOGOLD + f"QUESTION: {question}\nANSWER: {answer}\n"
+    mdl = os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite")
+    txt = _judge_client().models.generate_content(model=mdl, contents=prompt).text.strip().strip("`")
+    if txt.lower().startswith("json"):
+        txt = txt[4:].strip()
+    o = _json.loads(txt)
+    for kk in ("correctness", "completeness", "groundedness", "clarity"):
+        o[kk] = int(o.get(kk, 0))
+    o["total"] = o["correctness"] + o["completeness"] + o["groundedness"] + o["clarity"]
+    return o
+
+class JudgeReq(BaseModel):
+    question: str
+    gold: str = ""
+    evidence: str = ""
+    answers: dict = {}                     # {"A": "...", "B": "...", "C": "..."}
+
+@app.post("/judge")
+def judge(r: JudgeReq):
+    """Score already-generated A/B/C answers with the same reference-grounded rubric as the eval.
+    With a gold+evidence (dropdown questions) it grades against the reference; without (typed
+    questions) it grades from the judge's own knowledge, and `grounded` is False."""
+    out = {}
+    for k, ans in (r.answers or {}).items():
+        try:
+            out[k] = _judge_one(r.question, r.gold, r.evidence, ans)
+        except Exception as e:
+            out[k] = {"error": str(e)[:140]}
+    return {"grounded": bool(r.gold), "scores": out}

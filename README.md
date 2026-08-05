@@ -49,13 +49,17 @@ retrieval add on top? Three systems, one held-out set, a reference-grounded judg
 ## Repository layout
 
 ```
-data/     DATA.md (dataset card + honest funnel), train.jsonl (2,683), heldout.jsonl (60),
-          collect/ (fetch + clean scripts), generate/ (teacher QA + judge gauntlet)
-train/    modal_finetune_gemma.py, loss_curve.png, MODEL_CARD.md, serve_local.py (/generate + /ask)
-rag/      build_index.py, retrieve.py (/retrieve endpoint), recall_at_k.py, recall_at_k.json
-eval/     run_eval.py, judge.py, leaderboard.py, responses.json, verdicts.json, leaderboard.json
-site/     index.html — the deployed A/B/C frontend
-report.pdf   the one-page report
+data/       DATA.md (dataset card + funnel), train.jsonl (2,683), heldout.jsonl (60),
+            collect/ (fetch + clean), generate/ (teacher QA + judge gauntlet)
+train/      modal_finetune_gemma.py, loss_curve.png, MODEL_CARD.md, serve_local.py (/generate · /ask · live /judge)
+rag/        build_index.py, retrieve.py (/retrieve), recall_at_k.py + .json, chunking_study/ (retriever design study)
+eval/       run_eval.py, judge.py, leaderboard.py, responses.json, verdicts.json, leaderboard.json
+site/       index.html — the deployed arena (A/B/C live, categorized dropdown, live AI judge)
+frontends/  build.py + base/ finetune/ rag/ — the three per-system sites (generated)
+finetune/   pilot/ — the QA-generation pilot run
+docs/       design notes (retriever study, cleaning system, eval plan, verification, …)
+report/     make_report.py, results-dossier.html   ·   report.pdf (root) — the one-page report
+story.md    the running build log (E1–E48)
 ```
 
 ## Reproduce, in order

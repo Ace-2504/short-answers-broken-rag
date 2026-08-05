@@ -48,18 +48,18 @@ td.num{text-align:right;font-family:ui-monospace,monospace;}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;gap:12px;flex-wrap:wrap;}
 .nav a{color:var(--fg-muted);text-decoration:none;}.nav a:hover{color:var(--fg);}
 .navright{display:flex;align-items:center;gap:12px;}
-.gh{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--fg);border:1px solid var(--border);padding:6px 12px;border-radius:999px;background:var(--panel-2);}
+.gh{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--fg);text-decoration:none;border:1px solid var(--border);padding:6px 12px;border-radius:999px;background:var(--panel-2);}
 .gh:hover{border-color:var(--accent);color:var(--fg);}.gh svg{width:15px;height:15px;fill:currentColor;}
 .picker{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--border);background:var(--panel);border-radius:999px;padding:6px 8px;}
 .swatch{display:grid;place-items:center;border-radius:50%;border:0;background:transparent;width:20px;height:20px;cursor:pointer;padding:0;}
 .swatch span{width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.25);}
 .swatch[aria-checked="true"] span{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--fg);}
 
-.hero{padding:40px 0 20px;text-align:center;}
-.brand{display:flex;width:fit-content;align-items:center;gap:8px;font-family:ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);border:1px solid color-mix(in srgb,var(--accent) 45%,var(--border));background:color-mix(in srgb,var(--accent) 10%,var(--panel-2));padding:7px 15px;border-radius:999px;margin:0 auto 20px;}
+.hero{padding:38px 0 18px;}
+.brand{display:flex;width:fit-content;align-items:center;gap:8px;font-family:ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);border:1px solid color-mix(in srgb,var(--accent) 45%,var(--border));background:color-mix(in srgb,var(--accent) 10%,var(--panel-2));padding:7px 15px;border-radius:999px;margin:0 0 18px;}
 .brand::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;}
 .hero h1{font-size:clamp(2rem,6vw,3.2rem);margin:10px 0 14px;letter-spacing:-.02em;font-weight:650;}
-.hero p.lead{color:var(--fg-muted);font-size:1.05rem;max-width:60ch;line-height:1.55;margin:0 auto;}
+.hero p.lead{color:var(--fg-muted);font-size:1.02rem;max-width:72ch;line-height:1.55;margin:0;}
 .hero p.lead em{color:var(--fg);font-style:normal;font-weight:600;}
 .statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:26px 0;}
 .stat{padding:16px;text-align:center;}
@@ -78,6 +78,9 @@ td.num{text-align:right;font-family:ui-monospace,monospace;}
 .sysh{display:flex;align-items:center;gap:8px;}.dot{width:9px;height:9px;border-radius:3px;flex:none;}
 .sysname{font-weight:600;font-size:14px;}.win{color:var(--accent);}
 .syssub{color:var(--fg-dim);font-size:11.5px;margin-left:auto;font-family:ui-monospace,monospace;}
+.score{margin-top:8px;font-size:12px;line-height:1.5;}
+.jpill{font-family:ui-monospace,monospace;font-weight:700;color:#fff;border-radius:6px;padding:2px 7px;font-size:11px;margin-right:7px;}
+.jnote{color:var(--fg-muted);}
 .ans{font-size:14px;white-space:pre-wrap;}.ph{color:var(--fg-dim);font-size:13px;}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;}
 .pass{margin-top:8px;font-size:12px;color:var(--fg-muted);}
@@ -110,10 +113,13 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
     <div class="brand">Built &amp; evaluated by Harman Sandhu</div>
     <span class="tag" style="color:var(--accent)">Fine-tune vs. retrieval · one model, three systems</span>
     <h1>Yu-Gi-Oh SLM Arena</h1>
-    <p class="lead">One Yu-Gi-Oh question, three systems answering <em>live</em> — the untouched Gemma&nbsp;2&nbsp;2B base,
-      our QLoRA fine-tune, and the fine-tune with a retriever feeding it real passages. Each answer is scored 0–10
-      by a reference-grounded blind judge handed the gold answer, so the scores are checkable. It all tests one claim:
-      <em>fine-tuning teaches the answer's shape; retrieval supplies the facts.</em></p>
+    <p class="lead"><strong>Yu-Gi-Oh is a trading card game with thousands of cards and famously fiddly rules</strong> —
+      cards interact in ways even seasoned players argue about, which makes it a genuinely hard test for a small AI model.
+      So I built three of them and put them against the same questions: <strong>(A)</strong> Google's Gemma&nbsp;2&nbsp;2B
+      straight out of the box; <strong>(B)</strong> the same model after I fine-tuned it on Yu-Gi-Oh questions and answers;
+      and <strong>(C)</strong> that fine-tune paired with a retriever that looks up the real card text before it answers.
+      Every answer is scored 0–10 by an AI judge that is handed the correct answer, so the scores are checkable — and the
+      whole point is simple: <em>fine-tuning teaches the model how to answer; retrieval is what gives it the facts.</em></p>
   </header>
 
   <div class="statgrid">
@@ -158,28 +164,34 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
   <!-- ARENA -->
   <section class="section tabpanel active" id="arena" style="margin-top:0">
     <div class="panel card">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
         <span class="tag">interactive</span><span class="badge" id="badge">connecting…</span>
+        <span class="tag" id="jlabel" style="color:var(--fg-dim)"></span>
       </div>
       <h2 style="margin:0 0 4px;font-size:1.15rem">One question, three systems, judged live</h2>
-      <p style="margin:0 0 12px">Ask a held-out question or write your own; the base, the fine-tune and the
-        fine-tune+retrieval each answer in turn.</p>
-      <div class="chips" id="chips"></div>
+      <p style="margin:0 0 12px">Pick a question by <strong>category</strong> — those carry a written answer key, so the AI
+        judge scores each answer <strong>against a reference</strong> — or type your own, which the judge grades from its own knowledge.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+        <select class="field" id="qpick" style="flex:1;min-width:240px"><option value="">— pick a question by category —</option></select>
+      </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <input class="field" id="q" style="flex:1;min-width:220px" placeholder="Ask a Yu-Gi-Oh rules / card question…"
+        <input class="field" id="q" style="flex:1;min-width:220px" placeholder="…or type your own Yu-Gi-Oh question"
           value="What is the ATK of Sky Striker Ace - Raye?">
         <button class="btn-primary" id="go" disabled>Ask all three</button>
       </div>
       <div class="cols">
         <div class="panel sys" id="sysA">
           <div class="sysh"><span class="dot" style="background:var(--accent-3)"></span><span class="sysname">A · Base</span><span class="syssub">closed book</span></div>
-          <div class="ans ph" data-slot>Ask a question to see the untouched Gemma 2 2B answer.</div></div>
+          <div class="ans ph" data-slot>Ask a question to see the untouched Gemma 2 2B answer.</div>
+          <div class="score" id="scoreA"></div></div>
         <div class="panel sys" id="sysB">
           <div class="sysh"><span class="dot" style="background:var(--accent-2)"></span><span class="sysname">B · Fine-tune</span><span class="syssub">closed book</span></div>
-          <div class="ans ph" data-slot>Our QLoRA fine-tune, no retrieval.</div></div>
+          <div class="ans ph" data-slot>Our QLoRA fine-tune, no retrieval.</div>
+          <div class="score" id="scoreB"></div></div>
         <div class="panel sys" id="sysC">
           <div class="sysh"><span class="dot" style="background:var(--accent)"></span><span class="sysname win">C · +retrieval</span><span class="syssub">RAG</span></div>
           <div class="ans ph" data-slot>Fine-tune with the retriever supplying passages.</div>
+          <div class="score" id="scoreC"></div>
           <div class="pass" id="passC"></div></div>
       </div>
     </div>
@@ -315,8 +327,7 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
 <script>
   const BASE = "https://university-hindu-excel-welding.trycloudflare.com";
   const ENDPOINT = BASE + "/ask";
-  const EXAMPLES = ["What is the ATK of Sky Striker Ace - Raye?","Does Effect Veiler stop a Graveyard effect?",
-    "Can you activate a normal Spell in the Damage Step?","What two monster types make up the Kozmo archetype?"];
+  const QUESTIONS = [{"q": "If a player activates \"Book of Moon\" in response to the activation of \"Chain Disappearance\" against a Summoned monster, are other copies of that monster still banished from the hand and Deck?", "gold": "No, if the Summoned monster is no longer face-up on the field when the effect resolves, the remaining copies in the hand and Deck are not banished.", "evidence": "When \"Chain Disappearance\" resolves, if the monster that was Summoned is no longer face-up on the field because a card like \"Book of Moon\" was activated in a Chain, then the Summoned monster is not banished. Therefore, monsters with the same name in the hand or Deck are not banished.", "category": "interaction"}, {"q": "Can \"Forgotten Temple of the Deep\" trigger the ATK-boosting effect of \"The Dragon Dwelling in the Deep\" multiple times?", "gold": "Yes, the ATK-boosting effect of \"The Dragon Dwelling in the Deep\" can be repeatedly triggered by using the effect of \"Forgotten Temple of the Deep\".", "evidence": "This card's ATK-boosting effect can be repeatedly triggered by using the effect of \"Forgotten Temple of the Deep\" or the first bulleted effect of \"Sea Stealth Attack\".", "category": "interaction"}, {"q": "Can \"XX-Saber Darksoul\" be used to add \"XX-Saber Gardestrike\" from the Deck to the hand?", "gold": "Yes, \"XX-Saber Darksoul\" is a searcher that can add \"XX-Saber Gardestrike\" from the Deck to the hand.", "evidence": "This card can be searched by \"X-Saber Pellina\", \"Saber Combination\", \"XX-Saber Darksoul\", \"XX-Saber Garsem\", \"Tri-Brigade Airborne Assault\", \"Tri-Brigade Shuraig the Ominous Omen\", \"Kittytail, Mystical Beast of the Forest\", \"Fire Fortress atop Liang Peak\", \"Aussa the Earth Charmer, Immovable\", \"BOXer\", \"Frontline Observer\", \"Imperial Princess Quinquery\", \"Quick Summon\", \"Rescue Ferret\", \"Witch of the Black Forest\", and other generic searchers.", "category": "interaction"}, {"q": "If Relinquished equips Proto-Cyber Dragon, is it treated as Cyber Dragon?", "gold": "No, the effect is not applied while Proto-Cyber Dragon is an Equip Spell Card, so it is not treated as Cyber Dragon.", "evidence": "The effect of \"Proto-Cyber Dragon\" is a Continuous Effect, so if it is treated as an Equip Spell Card by the effect of a card such as \"Relinquished\", the effect will not be applied and it will not be treated as \"Cyber Dragon\".", "category": "interaction"}, {"q": "If Botanical Girl is destroyed by the effect of Ancient Forest, can its effect still be activated?", "gold": "Yes, the effect activates because no further actions occur after Ancient Forest destroys the monster.", "evidence": "You can use Botanical Girl 's effect with Ancient Forest by attacking, thus destroying your monster and activating its effect because no further effect is done after Ancient Forest activates.", "category": "interaction"}, {"q": "If you control only Crimson Resonator after resolving the effect of Red Rising Dragon, can you activate the effect of Crimson Resonator to Special Summon two Resonators?", "gold": "Yes, you can activate the effect because Crimson Resonator is the only monster you control.", "evidence": "Use both cards to Synchro Summon \"Red Rising Dragon\" and use its effect to Special Summon this card to the Field. Providing these two are the only monsters you control, you can now Special Summon two more Resonators with this card's effect", "category": "timing"}, {"q": "Can \"Pendulum Shift\" be activated before activating the Pendulum Effect of \"Ghost Beef\"?", "gold": "Yes, \"Pendulum Shift\" can be used on \"Ghost Beef\" prior to the activation of its Pendulum Effect to potentially increase its scale.", "evidence": "Before activating this card's Pendulum Effect, \"Pendulum Shift\" can be used on this card (declaring 10), enabling the possibility of this card gaining a Pendulum Scale of 13 or greater.", "category": "timing"}, {"q": "Can a player activate the effect of Nightmell the Dark Bonder during the Damage Step?", "gold": "No, the effect of Nightmell the Dark Bonder is an Ignition Effect, so it cannot be activated during the Damage Step.", "evidence": "This effect is an Ignition Effect, which can be activated in the Monster Zone.", "category": "timing"}, {"q": "If control of Mad Reloader switches to your opponent, when it returns to your graveyard, can you activate its effect?", "gold": "Yes, you can activate the effect of Mad Reloader when it returns to your graveyard even if your opponent had control of it previously.", "evidence": "If control of this card switches to your opponent, when it returns to your graveyard, you will get its effect.", "category": "timing"}, {"q": "Can Yosenju Kama 2 be returned to the hand during the End Phase if it was Flip Summoned?", "gold": "No, Yosenju Kama 2 can only return to the hand during the End Phase if it was Normal Summoned that turn.", "evidence": "Once per turn, during the End Phase, if this card was Normal Summoned this turn: Return it to the hand", "category": "timing"}, {"q": "What are the ATK and DEF stats of the 'Drytron' archetype monster 'Drytron Mu Beta Fafnir'?", "gold": "'Drytron Mu Beta Fafnir' has 2000 ATK and 0 DEF.", "evidence": "\"Drytron Mu Beta Fafnir\" is a LIGHT Machine XYZ Monster, Rank 1 with 2000 ATK / 0 DEF, part of the \"Drytron\" archetype.", "category": "card facts"}, {"q": "What is the effect of the \"Raidraptor - Return\" trap card when a face-up \"Raidraptor\" monster you control is destroyed by a card effect?", "gold": "If a face-up \"Raidraptor\" monster(s) you control is destroyed by a card effect, you can banish the card from your Graveyard to add one \"Raidraptor\" card from your Deck to your hand.", "evidence": "If a face-up \"Raidraptor\" monster(s) you control is destroyed by card effect: You can banish this card from your Graveyard; add 1 \"Raidraptor\" card from your Deck to your hand.", "category": "card facts"}, {"q": "What are the ATK and DEF stats of the Synchro Monster \"Angelica, Princess of Noble Arms\"?", "gold": "\"Angelica, Princess of Noble Arms\" has 1200 ATK and 2400 DEF.", "evidence": "\"Angelica, Princess of Noble Arms\" is a FIRE Warrior Synchro Monster, Level 5 with 1200 ATK / 2400 DEF, part of the \"Noble Arms\" archetype.", "category": "card facts"}, {"q": "What is the effect of \"Big-Winged Berfomet\" when it is sent to the GY as material for a Fusion Summon?", "gold": "When sent to the GY as material for a Fusion Summon, \"Big-Winged Berfomet\" allows you to target 1 Illusion monster in your GY and Special Summon it.", "evidence": "If this card is sent to the GY as material for a Fusion Summon: You can target 1 Illusion monster in your GY; Special Summon it.", "category": "card facts"}, {"q": "What is the effect of the card 'Detonating Kuriboh' when it is equipped to an opponent's monster?", "gold": "When 'Detonating Kuriboh' is equipped to an opponent's monster as an Equip Spell, that monster's effects are negated.", "evidence": "When your opponent activates a monster effect on the field (Quick Effect): You can equip this card you control to that opponent's monster as an Equip Spell with the following effect. ● The equipped monster's effects are negated.", "category": "card facts"}, {"q": "Which Equip Spell Card did Leo draw to help him defeat Zeman the Ape King in the fiftieth episode of Yu-Gi-Oh! 5D's?", "gold": "Leo drew the Equip Spell Card \"Double Tool C&D\" to help him attempt to defeat Zeman the Ape King.", "evidence": "Leo hopes very much that it will be a card that can beat \"Zeman the Ape King this time. As he draws he closes his eyes, and after opening them he is happy, because he drew \"Double Tool C&D\"", "category": "lore"}, {"q": "Which character in the Yu-Gi-Oh! ZEXAL anime uses the \"Raccoon\" (or \"Tanuki\") archetype?", "gold": "Ponta uses the \"Raccoon\" archetype in the Yu-Gi-Oh! ZEXAL anime.", "evidence": "\"Raccoon\", known as \"Tanuki\" (狸) in Japanese, is an archetype used by Ponta in the Yu-Gi-Oh! ZEXAL anime.", "category": "lore"}, {"q": "Which Yu-Gi-Oh! GX character is known for using 'Elemental HERO Flame Wingman' as their first signature card?", "gold": "Jaden Yuki is the character associated with 'Elemental HERO Flame Wingman' as his first signature card in the Yu-Gi-Oh! GX anime.", "evidence": "\"Wingman\" (ウィングマン Winguman) is an archetype of Warrior Fusion Monsters that are counterparts or upgraded forms of \"Elemental HERO Flame Wingman\", the first signature card of Jaden Yuki in the Yu-Gi-Oh! GX anime.", "category": "lore"}, {"q": "Which monster is considered one of the most important cards in the modern 'Ice Barrier' Deck, despite not actually being an 'Ice Barrier' monster itself?", "gold": "The most important card is 'Lancea, Ancestral Dragon of the Ice Mountain'. It is key to the archetype's strategy because it allows the player to summon floodgates when the opponent Special Summons, and it can bring out powerful Extra Deck monsters when it leaves the field.", "evidence": "Card Description Lancea, Ancestral Dragon of the Ice Mountain One of the Deck's most important cards. When an opponent Special Summons, it can Special Summon floodgates like \"General Raiho of the Ice Barrier\" (hard twice per turn). Also, when it leaves the field, it can Special Summon an \"Ice Barrier\" monster from the Extra Deck (treated as a Synchro Summon), accessing powerful removal tools like \"Trishula, Dragon of the Ice Barrier\" and \"Trishula, Zero Dragon of the Ice Barrier\". Note that \"Lancea\" is not an \"Ice Barrier\" monster.", "category": "lore"}, {"q": "Why is 'Utopic Onomatopoeia' not considered a member of the 'Utopic' archetype?", "gold": "It is excluded because the card name does not contain the Japanese characters 'ホープ'.", "evidence": "\"Utopic Onomatopoeia\" is not a member of this archetype, as it does not have 「ホープ」 in it's Japanese name.", "category": "lore"}];
   const THEMES=[["parchment","Parchment",["#b45309","#0f766e","#6d28d9"]],["amber","Amber",["#f5b342","#38d9c4","#a78bfa"]],
     ["cobalt","Cobalt",["#5b93ff","#22d3ee","#9d7bff"]],["phosphor","Phosphor",["#4ade80","#eab308","#22d3ee"]],
     ["ember","Ember",["#fb7185","#fb923c","#fbbf24"]],["nord","Nord",["#88c0d0","#a3be8c","#b48ead"]]];
@@ -369,20 +380,34 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
      <td class="num" style="color:var(--fg-muted)">${pct}%</td></tr>`).join('')
      +`<tr><td style="font-weight:700">Total invoiced</td><td class="num" style="font-weight:700">$2.36</td><td></td><td class="num" style="color:var(--fg-muted)">100%</td></tr>`;
 
-  // ask
-  const chips=document.getElementById('chips'), qEl=document.getElementById('q'), badge=document.getElementById('badge'), go=document.getElementById('go');
-  EXAMPLES.forEach(x=>{ const c=document.createElement('button'); c.className='btn'; c.style.fontSize='.82rem'; c.style.padding='6px 10px';
-    c.textContent=x.length>60?x.slice(0,58)+'…':x; c.title=x; c.onclick=()=>{ qEl.value=x; if(ONLINE) ask(); }; chips.appendChild(c); });
+  // ask + question dropdown (grouped by category) + live AI judge
+  const qEl=document.getElementById('q'), badge=document.getElementById('badge'), go=document.getElementById('go'),
+        qpick=document.getElementById('qpick'), jlabel=document.getElementById('jlabel');
+  const SCORE={A:'scoreA',B:'scoreB',C:'scoreC'};
+  let CURRENT=null;   // {gold,evidence} when a dropdown question is chosen; null for a typed one
+  (function(){ const cats={}; QUESTIONS.forEach((x,i)=>{ (cats[x.category]=cats[x.category]||[]).push([i,x.q]); });
+    Object.keys(cats).forEach(cat=>{ const og=document.createElement('optgroup'); og.label=cat.toUpperCase();
+      cats[cat].forEach(([i,q])=>{ const o=document.createElement('option'); o.value=i; o.textContent=(q.length>92?q.slice(0,90)+'…':q); og.appendChild(o); });
+      qpick.appendChild(og); }); })();
+  qpick.onchange=()=>{ if(qpick.value===''){ CURRENT=null; return; } const x=QUESTIONS[+qpick.value];
+    qEl.value=x.q; CURRENT={gold:x.gold, evidence:x.evidence}; clearScores(); if(ONLINE) ask(); };
+  qEl.addEventListener('input',()=>{ CURRENT=null; qpick.value=''; });
+
   const slot=id=>document.querySelector('#'+id+' [data-slot]');
   function setAns(id,t,win){ const s=slot(id); s.className='ans'+(win?' win':''); s.textContent=t; }
   function loading(id){ const s=slot(id); s.className='ans ph'; s.textContent='…thinking'; }
+  function clearScores(){ for(const k in SCORE){ const e=document.getElementById(SCORE[k]); if(e) e.innerHTML=''; } if(jlabel) jlabel.textContent=''; }
+  function renderScore(k,v){ const e=document.getElementById(SCORE[k]); if(!e) return;
+    if(!v||v.error){ e.innerHTML='<span class="jnote">judge unavailable</span>'; return; }
+    e.innerHTML=`<span class="jpill" style="background:${sc(v.total)}">${v.total}/10</span><span class="jnote">${(v.note||'').replace(/</g,'&lt;')}</span>`; }
   let ONLINE=false;
   function setStatus(ok){ ONLINE=ok; go.disabled=!ok;
     badge.className=ok?'badge badge-accent':'badge'; badge.textContent=ok?'live':'demo unavailable';
     if(!ok) ['sysA','sysB','sysC'].forEach(id=>setAns(id,'Demo unavailable — the local model server / tunnel is not reachable right now.')); }
   async function probe(){ try{ const r=await fetch(BASE+'/health',{cache:'no-store',signal:AbortSignal.timeout(8000)}); setStatus(r.ok); }catch(e){ setStatus(false); } }
+
   async function ask(){ const q=qEl.value.trim(); if(!q||!ONLINE) return; go.disabled=true;
-    ['sysA','sysB','sysC'].forEach(loading); document.getElementById('passC').innerHTML='';
+    ['sysA','sysB','sysC'].forEach(loading); document.getElementById('passC').innerHTML=''; clearScores();
     try{ const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,k:5}),signal:AbortSignal.timeout(120000)});
       if(!r.ok) throw new Error('HTTP '+r.status); const d=await r.json();
       setAns('sysA',d.A); setAns('sysB',d.B); setAns('sysC',d.C,true);
@@ -390,7 +415,19 @@ footer .src{color:var(--fg-dim);font-size:.82rem;margin-top:8px;}footer a{color:
       if(d.passages&&d.passages.length){ pc.innerHTML='<details open><summary style="cursor:pointer;color:var(--fg-muted);font-size:12px">▸ '+d.passages.length+' retrieved passages</summary></details>';
         const det=pc.querySelector('details'); d.passages.forEach(p=>{ const el=document.createElement('div'); el.className='p';
           el.innerHTML='<span class="pt">'+p.title+'</span><br>'+p.text.slice(0,220).replace(/</g,'&lt;')+'…'; det.appendChild(el); }); }
+      judgeAll(q,{A:d.A,B:d.B,C:d.C});
     }catch(err){ setStatus(false); } finally{ go.disabled=!ONLINE; } }
+
+  async function judgeAll(question, answers){
+    for(const k in SCORE){ const e=document.getElementById(SCORE[k]); if(e) e.innerHTML='<span class="jnote">…AI judge scoring</span>'; }
+    if(jlabel) jlabel.textContent='judging…';
+    try{ const r=await fetch(BASE+'/judge',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({question, gold:CURRENT?CURRENT.gold:'', evidence:CURRENT?CURRENT.evidence:'', answers}),signal:AbortSignal.timeout(120000)});
+      if(!r.ok) throw new Error('HTTP '+r.status); const d=await r.json();
+      for(const k in SCORE) renderScore(k, d.scores[k]);
+      if(jlabel) jlabel.textContent = d.grounded ? '· graded against the gold answer' : "· graded from the judge's own knowledge (no answer key)";
+    }catch(e){ for(const k in SCORE){ const el=document.getElementById(SCORE[k]); if(el) el.innerHTML=''; } if(jlabel) jlabel.textContent='· live judging unavailable'; } }
+
   go.onclick=ask; qEl.addEventListener('keydown',e=>{ if(e.key==='Enter') ask(); });
   probe();
 </script>

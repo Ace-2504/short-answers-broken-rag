@@ -33,7 +33,7 @@ supplying passages at inference it becomes *System C*.
   (`q,k,v,o,gate,up,down_proj`).
 - LR **2e-4** cosine (3% warmup), `paged_adamw_8bit`, seq len 512, effective batch 16.
 - **Early-stopped at the best validation checkpoint (~1 epoch)** — 3 epochs overfit this set.
-- **Validation perplexity: 3.872** (class reference: 4.26). Single **L4** GPU on Modal.
+- **Validation perplexity: 3.872**. Single **L4** GPU on Modal.
 
 ## Intended use & limitations
 
