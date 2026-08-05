@@ -31,9 +31,9 @@ def gap(mm=1.0): pdf.ln(mm)
 
 # ---- title: repository name + hero tagline ----
 pdf.set_font("Helvetica", "B", 15); pdf.set_text_color(*INK)
-pdf.multi_cell(W, 6.2, "short-answers-broken-rag")
+pdf.multi_cell(W, 6.2, "Short-Answers-Broken-RAG", align="C")
 pdf.set_x(pdf.l_margin); pdf.set_font("Helvetica", "", 10.5); pdf.set_text_color(*MUT)
-pdf.multi_cell(W, 4.7, "Fine-tuning vs. retrieval - why the reader, not the retriever, is a small model's ceiling")
+pdf.multi_cell(W, 4.7, "Fine-tuning vs. retrieval - why the reader, not the retriever, is a small model's ceiling", align="C")
 pdf.ln(0.8); pdf.set_draw_color(*LINE); pdf.line(17, pdf.get_y(), 17+W, pdf.get_y()); gap(2.0)
 
 # ---- 1. what I built ----
