@@ -64,3 +64,14 @@ data/generate/verdicts.jsonl
 !data/train.jsonl
 !data/heldout.jsonl
 !data/*stats*
+
+# ---- Local-only working files: kept on disk, intentionally NOT pushed to GitHub ----
+# (process/build history & planning; the pushed repo is the brief's minimal structure)
+/agent-prompt.md
+/PLAN.md
+/story.md
+/costs.md
+/docs/
+/rag/chunking_study/
+/finetune/
+/report/
