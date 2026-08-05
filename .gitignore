@@ -78,3 +78,6 @@ finetune/pilot/*.jsonl
 
 # Personal mentor submission — not for the public repo
 mentor-note.md
+
+# Old report kept locally, not on GitHub
+report_old.pdf
