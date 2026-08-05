@@ -336,7 +336,7 @@ endpoints, cost). → *Better: all six parts of the assignment now have delivera
 **E41 · Repo stripped to the brief's minimal structure + pushed to GitHub.** Moved `report.pdf` to
 root, folded the QA-generation scripts into `data/generate/`, removed the process/meta files from
 tracking so the repo is exactly `data/ train/ rag/ eval/ site/ report.pdf README.md` (33 files).
-Created the **private** GitHub repo **Ace-2504/ygo-slms** and pushed `main`. → *Better: clean
+Created the **private** GitHub repo **Ace-2504/does-my-ai-know-yugioh** and pushed `main`. → *Better: clean
 submission repo — but the strip initially deleted the process files from disk too.*
 
 **E42 · Restored the local-only files (course-correction).** Harman wanted the docs/story/etc. kept
@@ -416,7 +416,7 @@ RAG link. Pushed `786bf4a`. → *Better: both trained variants are first-class H
 - **Phase 4 COMPLETE** (E35): 42,412-chunk hybrid index + `/retrieve`; recall@k hybrid r@5 **0.93**.
 - **Phase 5 COMPLETE** (E37): A 3.98 / B 5.25 / C **8.05**; A-vs-B +1.27 (sig), B-vs-C +2.80 (sig).
 - **Phase 6 COMPLETE** (E40); `report.pdf` written (Harman's voice, 5 points); README to submission spec.
-- **Repo minimal + on GitHub** (E41–E42): private **Ace-2504/ygo-slms**, `main` = the brief's structure
+- **Repo minimal + on GitHub** (E41–E42): private **Ace-2504/does-my-ai-know-yugioh**, `main` = the brief's structure
   (33 files); process/meta files kept locally, gitignored.
 - **Frontends** (E43–E45): combined arena live at **https://harman-ygo-slm.vercel.app** (parchment,
   tabs, corpus + cost, GitHub button); three individual sites **harman-ygo-{base,finetune,rag}.vercel.app**;
