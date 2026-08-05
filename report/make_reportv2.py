@@ -6,7 +6,7 @@ A = (46, 125, 184)      # A base (blue)
 B = (199, 127, 20)      # B fine-tune (amber)
 C = (21, 155, 118)      # C retrieval (green)
 INK = (25, 29, 27); MUT = (95, 100, 96); LINE = (205, 210, 205)
-LH = 3.4                # shared body line height
+LH = 3.55               # shared body line height
 
 pdf = FPDF(format="A4", unit="mm")
 pdf.set_margins(17, 14, 17)
@@ -14,11 +14,11 @@ pdf.set_auto_page_break(auto=True, margin=9)
 pdf.add_page()
 W = 210 - 34   # content width
 
-def h(txt, size=9.9):
+def h(txt, size=10.1):
     pdf.set_x(pdf.l_margin)
     pdf.set_font("Helvetica", "B", size); pdf.set_text_color(*INK)
-    pdf.multi_cell(W, 4.0, txt); pdf.ln(0.1)
-def body(txt, size=9.0):
+    pdf.multi_cell(W, 4.3, txt); pdf.ln(0.1)
+def body(txt, size=9.2):
     pdf.set_x(pdf.l_margin)
     pdf.set_font("Helvetica", "", size); pdf.set_text_color(*INK)
     pdf.multi_cell(W, LH, txt, markdown=True)
@@ -132,16 +132,10 @@ body("One thing I could not fully test, and I would put it to anyone reading thi
      "a median length of only 17 words. Could that short-answer habit be leaking into System C, making it "
      "drop details even when the passage clearly holds them - a better explanation for the incomplete answers "
      "than anything on the retrieval side? I would welcome other views on it.")
-gap(0.6)
-body("**External evidence for the reader bottleneck.** Pandey (2026), \"Can Small Language Models Use What "
-     "They Retrieve?\", arXiv:2603.11513 - even a 7B model uses an oracle-retrieved passage only ~15% of the "
-     "time. Baturova et al. (2026), \"Little Brains, Big Feats\", arXiv:2606.30062 - on fixed context, the "
-     "reader alone swings answer quality. Liu et al. (2025), \"ROSE-RAG\", Findings of ACL - prompt-only "
-     "fixes fail on small readers.")
 
 # ---- footer ----
-gap(0.8)
-pdf.set_draw_color(*LINE); pdf.line(17, pdf.get_y(), 17+W, pdf.get_y()); gap(0.5)
+gap(1.2)
+pdf.set_draw_color(*LINE); pdf.line(17, pdf.get_y(), 17+W, pdf.get_y()); gap(0.8)
 pdf.set_x(pdf.l_margin); pdf.set_font("Helvetica", "", 8.2); pdf.set_text_color(*MUT)
 pdf.multi_cell(W, 3.4, "A study by Harman Singh Sandhu, CSE student at JIIT Noida and BS Data Science, IIT "
                "Madras.    Published 6 August 2026.")
