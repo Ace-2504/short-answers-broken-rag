@@ -27,14 +27,19 @@ points made of — retrieval, or reading?*
 | 3 | **"Look deeper"** — rerank a wider candidate pool | Recover the 7% of questions retrieval misses | **Recall rose (0.93 → 0.95 → 0.97) but the score did not.** Recall ≠ answer quality. |
 | 4 | **Chunk-truncation fix** — adjacent-chunk expansion (±2), de-overlapped | Long effects split across 1000-char chunks → repair them | **Fixed the retrieval bug** (a card's stranded effect clause was reconstructed into the context) — **but the answer stayed incomplete.** The reader ignored the recovered clause. The bug is also rare (0.2% of cards). |
 | 5 | **Failure re-diagnosis** (score by question type) | — | The tail is **yes/no reasoning inversions** — the model flips the answer with the correct passage present — **not** stat lookups. |
-| 6 | **Six non-retraining reader fixes** on two cards (Blackwing FAM, Endymion) | A cheap in-model trick might fix the reader | **Self-consistency, self-verification, and quote-then-answer all failed.** The only reliable win: **a stronger reader on the same context → 6/10 to 10/10.** |
+| 6 | **Six non-retraining reader fixes** on two cards (Blackwing FAM, Endymion) | A cheap in-model trick might fix the reader | **Self-consistency, self-verification, and quote-then-answer all failed.** The only reliable win: **a stronger reader on the same context produced the complete, correct answer** where the fine-tune under-answered. |
 
 ## The confirmation
 
 Experiment 6 is the controlled test: **hold the retrieved context fixed, swap only the reader.** A stronger
-model took both test cards from **6/10 to 10/10** and recovered the exact effect clause the 2.6B model kept
-dropping. The context was sufficient all along — so **the 2.6B reader is the binding constraint**, proven
-directly rather than by elimination.
+model, reading the identical passages, **produced complete, correct answers on both test cards** and
+recovered the exact effect clause the 2.6B model kept dropping. The context was sufficient all along — so
+**the 2.6B reader is the binding constraint**, proven directly rather than by elimination.
+
+> *Note on scoring: the reference-grounded judge is stochastic, so per-question scores vary run to run and
+> are not quoted here as fixed numbers — the finding is the qualitative gap (complete vs under-answered),
+> which is stable; the headline System-C averages (8.05 / 8.25) are over 60 questions and are the reliable
+> figures.*
 
 ## What the literature says
 
