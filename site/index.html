@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en" data-theme="cobalt">
+<html lang="en" data-theme="parchment">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yu-Gi-Oh SLM Arena · fine-tune vs. retrieval</title>
-<meta name="description" content="Ask a Yu-Gi-Oh question and watch base, fine-tune, and fine-tune+retrieval answer live, side by side.">
+<title>Yu-Gi-Oh SLM Arena · fine-tune vs. retrieval · Harman Sandhu</title>
+<meta name="description" content="One Yu-Gi-Oh question, three systems — base, QLoRA fine-tune, and fine-tune + retrieval — answering live and scored by a reference-grounded blind judge.">
+<script>(function(){try{var t=localStorage.getItem('ygo-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <style>
-  /* ---- research-lab theme tokens ---- */
   [data-theme="cobalt"]{--bg:#06080f;--bg-soft:#0a0e1a;--panel:#0e1424;--panel-2:#121a2e;
     --border:#1e2740;--border-soft:#172038;--fg:#e8edf6;--fg-muted:#8893ab;--fg-dim:#5a6480;
     --accent:#5b93ff;--accent-2:#22d3ee;--accent-3:#9d7bff;--grid:rgba(255,255,255,0.025);
@@ -44,188 +44,319 @@
   .panel-inset{background:var(--bg);border:1px solid var(--border-soft);border-radius:10px;}
   .tag{font-family:ui-monospace,monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted);}
   .hairline{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);}
-  input,button{transition:background-color .35s,border-color .35s,color .35s;font:inherit;}
+  input,button,textarea{transition:background-color .35s,border-color .35s,color .35s;font:inherit;}
+  a{color:var(--accent);}
+  .wrap{max-width:1000px;margin:0 auto;padding:20px 20px 80px;}
 
-  .wrap{max-width:1080px;margin:0 auto;padding:26px 20px 80px;}
-  header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;}
-  h1{font-size:clamp(22px,3.4vw,32px);letter-spacing:-.02em;margin:6px 0 4px;font-weight:600;}
-  .sub{color:var(--fg-muted);max-width:60ch;margin:0;font-size:15px;}
+  /* nav */
+  nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+  .navright{display:flex;align-items:center;gap:12px;}
+  .gh{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--fg);text-decoration:none;
+    border:1px solid var(--border);padding:6px 12px;border-radius:999px;background:var(--panel-2);font-weight:500;}
+  .gh:hover{border-color:var(--accent);}
+  .gh svg{width:15px;height:15px;fill:currentColor;}
   .swatches{display:flex;gap:8px;align-items:center;}
   .sw{width:18px;height:18px;border-radius:50%;border:1px solid var(--border);cursor:pointer;padding:0;}
   .sw[aria-pressed="true"]{outline:2px solid var(--accent);outline-offset:2px;}
 
-  .ask{margin-top:26px;padding:18px;}
-  .askrow{display:flex;gap:10px;flex-wrap:wrap;}
-  .askrow input{flex:1;min-width:220px;padding:12px 14px;border-radius:10px;background:var(--bg);
-    border:1px solid var(--border);color:var(--fg);}
-  .askrow input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent);}
-  .btn{padding:12px 20px;border-radius:10px;border:1px solid var(--accent);cursor:pointer;font-weight:600;
-    background:var(--accent);color:#04121f;}
-  .btn:disabled{opacity:.55;cursor:progress;}
-  [data-theme="parchment"] .btn{color:#fff;}
-  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
-  .chip{font-size:12.5px;padding:6px 11px;border-radius:999px;border:1px solid var(--border);
-    background:var(--panel-2);color:var(--fg-muted);cursor:pointer;}
-  .chip:hover{color:var(--fg);border-color:var(--accent);}
+  /* hero (centered) */
+  header.hero{text-align:center;margin:40px auto 6px;max-width:74ch;}
+  .brand{font-family:ui-monospace,monospace;font-size:.66rem;letter-spacing:.2em;color:var(--fg-dim);text-transform:uppercase;}
+  .htag{display:inline-block;margin-top:14px;color:var(--accent);}
+  h1{font-size:clamp(30px,5.4vw,50px);letter-spacing:-.025em;margin:8px 0 12px;font-weight:600;}
+  .lead{color:var(--fg-muted);margin:0 auto;font-size:15.5px;max-width:66ch;}
+  .lead b{color:var(--fg);font-weight:600;}
+  .statrow{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:26px 0 6px;}
+  .statrow .s{padding:10px 16px;border:1px solid var(--border);border-radius:11px;background:var(--panel-2);min-width:96px;}
+  .statrow .v{font-family:ui-monospace,monospace;font-size:18px;font-weight:600;}
+  .statrow .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-dim);margin-top:2px;}
 
-  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;}
-  .sys{padding:16px 16px 14px;display:flex;flex-direction:column;gap:8px;min-height:120px;}
-  .sysh{display:flex;align-items:center;gap:8px;}
+  /* build matrix */
+  section.sec{margin-top:36px;}
+  .sechead{display:flex;align-items:baseline;gap:10px;margin-bottom:4px;}
+  .sechead h2{font-size:18px;font-weight:600;margin:2px 0;}
+  .secsub{color:var(--fg-muted);font-size:14px;margin:2px 0 14px;}
+  .matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .mcard{padding:16px;border:1px solid var(--border);border-radius:13px;background:var(--panel-2);
+    text-decoration:none;color:var(--fg);display:flex;flex-direction:column;gap:8px;position:relative;}
+  .mcard:hover{border-color:var(--accent);}
+  .mcard .mh{display:flex;align-items:center;gap:8px;}
   .dot{width:9px;height:9px;border-radius:3px;flex:none;}
-  .sysname{font-weight:600;font-size:14px;}
+  .mname{font-weight:600;font-size:14.5px;}
+  .mscore{margin-left:auto;font-family:ui-monospace,monospace;font-size:14px;color:var(--fg-muted);}
+  .mcard p{margin:0;font-size:13px;color:var(--fg-muted);flex:1;}
+  .mcard .open{font-size:12.5px;color:var(--accent);}
+
+  /* tabs */
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;border:1px solid var(--border);background:var(--panel-2);
+    border-radius:12px;padding:5px;margin-bottom:14px;}
+  .tab{flex:1;min-width:120px;padding:9px 12px;border-radius:8px;border:0;background:transparent;cursor:pointer;
+    color:var(--fg-muted);font-weight:500;font-size:13.5px;}
+  .tab[aria-selected="true"]{background:var(--panel);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.12);}
+  .tabpanel{display:none;} .tabpanel.active{display:block;}
+
+  /* ask */
+  .askhead{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .badge{font-family:ui-monospace,monospace;font-size:11px;padding:3px 9px;border-radius:999px;border:1px solid var(--border);color:var(--fg-dim);}
+  .badge.live{color:#04121f;background:var(--accent-2);border-color:var(--accent-2);}
+  [data-theme="parchment"] .badge.live{color:#fff;}
+  .badge.down{color:#fff;background:#d64b41;border-color:#d64b41;}
+  .askrow{display:flex;gap:10px;flex-wrap:wrap;}
+  .askrow input{flex:1;min-width:220px;padding:12px 14px;border-radius:10px;background:var(--bg);border:1px solid var(--border);color:var(--fg);}
+  .askrow input:focus{outline:none;border-color:var(--accent);}
+  .btn{padding:12px 20px;border-radius:10px;border:1px solid var(--accent);cursor:pointer;font-weight:600;background:var(--accent);color:#04121f;}
+  [data-theme="parchment"] .btn{color:#fff;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;background:var(--panel-2);color:var(--fg-dim);border-color:var(--border);}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+  .chip{font-size:12.5px;padding:6px 11px;border-radius:999px;border:1px solid var(--border);background:var(--panel-2);color:var(--fg-muted);cursor:pointer;}
+  .chip:hover{color:var(--fg);border-color:var(--accent);}
+  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;}
+  .sys{padding:15px;display:flex;flex-direction:column;gap:8px;min-height:120px;}
+  .sysh{display:flex;align-items:center;gap:8px;}
+  .sysname{font-weight:600;font-size:14px;} .win{color:var(--accent);}
   .syssub{color:var(--fg-dim);font-size:11.5px;margin-left:auto;}
-  .ans{font-size:14px;color:var(--fg);white-space:pre-wrap;}
-  .ph{color:var(--fg-dim);font-size:13px;}
-  .win{color:var(--accent);}
-  details{margin-top:6px;}
-  summary{cursor:pointer;color:var(--fg-muted);font-size:12px;list-style:none;}
-  summary::-webkit-details-marker{display:none;}
+  .ans{font-size:14px;white-space:pre-wrap;} .ph{color:var(--fg-dim);font-size:13px;}
   .pass{margin-top:8px;font-size:12px;color:var(--fg-muted);}
   .pass .p{padding:7px 9px;border-radius:8px;background:var(--bg);border:1px solid var(--border-soft);margin-bottom:6px;}
   .pass .pt{color:var(--accent-2);font-family:ui-monospace,monospace;font-size:11px;}
 
-  section.data{margin-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .panel h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-muted);margin:0 0 12px;font-weight:600;}
+  /* tables */
   table{width:100%;border-collapse:collapse;font-size:13.5px;}
-  th,td{text-align:right;padding:7px 10px;border-bottom:1px solid var(--border-soft);}
+  th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--border-soft);}
   th:first-child,td:first-child{text-align:left;}
   thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-dim);}
   tbody tr:last-child td{border-bottom:none;}
   td.n,th.n{font-family:ui-monospace,monospace;font-feature-settings:"tnum" 1;}
-  .sig{color:var(--accent);}
-  footer{margin-top:36px;color:var(--fg-dim);font-size:12.5px;}
+  .sig{color:var(--accent);} .win-row td{background:color-mix(in srgb,var(--accent) 8%,transparent);}
+  .note{color:var(--fg-muted);font-size:13px;} .note+.note{margin-top:8px;}
+  h3.blk{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin:18px 0 8px;font-weight:600;}
+  .rubric{list-style:none;padding:0;margin:8px 0;} .rubric li{padding:6px 0;border-bottom:1px solid var(--border-soft);display:flex;gap:10px;font-size:13.5px;}
+  .rubric li b{min-width:120px;}
+
+  /* corpus split bar */
+  .splitbar{display:flex;height:26px;border-radius:8px;overflow:hidden;border:1px solid var(--border);margin:6px 0 14px;}
+  .splitbar span{display:block;height:100%;}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--fg-muted);}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle;}
+
+  footer{margin-top:38px;color:var(--fg-dim);font-size:12.5px;text-align:center;}
   footer a{color:var(--fg-muted);}
-  .barwrap{margin-top:2px;height:6px;background:var(--bg);border-radius:4px;overflow:hidden;}
-  .bar{height:100%;background:var(--accent);border-radius:4px;}
-  .status{margin-top:12px;font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.02em;color:var(--fg-dim);}
-  .status .live{color:var(--accent-2);} .status .down{color:#e0524a;}
-  section.hub{margin-top:34px;}
-  .hubgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;}
-  .hubcard{padding:15px 16px;border:1px solid var(--border);border-radius:12px;background:var(--panel-2);
-    text-decoration:none;color:var(--fg);display:flex;flex-direction:column;gap:9px;}
-  .hubcard:hover{border-color:var(--accent);}
-  .hubcard .hh{display:flex;align-items:center;gap:8px;}
-  .hubcard .hs{margin-left:auto;font-family:ui-monospace,monospace;font-size:13px;color:var(--fg-muted);}
-  .hubcard p{color:var(--fg-muted);font-size:13px;margin:0;flex:1;}
-  .hubcard .open{font-size:12.5px;color:var(--accent);}
-  @media(max-width:820px){.cols{grid-template-columns:1fr;}section.data{grid-template-columns:1fr;}.hubgrid{grid-template-columns:1fr;}}
+  .grad-divider{height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.5;margin-bottom:14px;}
+  @media(max-width:820px){.matrix,.cols{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <div>
-      <div class="tag">Enterprise SLM · Yu-Gi-Oh domain</div>
-      <h1>Fine-tune vs. retrieval, answering live</h1>
-      <p class="sub">One question, three systems, side by side against real endpoints: the untouched base model,
-        our QLoRA fine-tune, and the fine-tune with a retriever feeding it passages.</p>
+  <nav>
+    <span class="tag">SLM Engineering</span>
+    <div class="navright">
+      <a class="gh" href="https://github.com/Ace-2504/ygo-slms" target="_blank" rel="noopener" title="Source on GitHub">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <div class="swatches" id="sw" aria-label="Theme">
+        <button class="sw" data-t="cobalt"    title="Cobalt"    style="background:#5b93ff"></button>
+        <button class="sw" data-t="phosphor"  title="Phosphor"  style="background:#4ade80"></button>
+        <button class="sw" data-t="amber"     title="Amber"     style="background:#f5b342"></button>
+        <button class="sw" data-t="ember"     title="Ember"     style="background:#fb7185"></button>
+        <button class="sw" data-t="parchment" title="Parchment" style="background:#e7e1d2"></button>
+      </div>
     </div>
-    <div class="swatches" id="sw" aria-label="Theme">
-      <button class="sw" data-t="cobalt"    title="Cobalt"    style="background:#5b93ff"></button>
-      <button class="sw" data-t="phosphor"  title="Phosphor"  style="background:#4ade80"></button>
-      <button class="sw" data-t="amber"     title="Amber"     style="background:#f5b342"></button>
-      <button class="sw" data-t="ember"     title="Ember"     style="background:#fb7185"></button>
-      <button class="sw" data-t="parchment" title="Parchment" style="background:#e7e1d2"></button>
+  </nav>
+
+  <header class="hero">
+    <div class="brand">Built &amp; evaluated by Harman Sandhu</div>
+    <span class="tag htag">Fine-tune vs. retrieval · one model, three systems</span>
+    <h1>Yu-Gi-Oh SLM Arena</h1>
+    <p class="lead">One Yu-Gi-Oh question, three systems answering live — the untouched Gemma&nbsp;2&nbsp;2B base,
+      our QLoRA fine-tune, and the fine-tune with a retriever feeding it real passages. Each answer is scored
+      0–10 by a <b>reference-grounded blind judge</b> that is handed the gold answer, so the scores are
+      checkable. It all tests one claim: <b>fine-tuning teaches the answer's shape; retrieval supplies the facts.</b></p>
+    <div class="statrow">
+      <div class="s"><div class="v">3</div><div class="l">Systems</div></div>
+      <div class="s"><div class="v">Gemma 2 2B</div><div class="l">One model</div></div>
+      <div class="s"><div class="v">2,683</div><div class="l">QA pairs</div></div>
+      <div class="s"><div class="v">60</div><div class="l">Held-out Qs</div></div>
+      <div class="s"><div class="v">1</div><div class="l">Blind judge</div></div>
     </div>
   </header>
 
-  <div class="panel ask">
-    <div class="askrow">
-      <input id="q" type="text" placeholder="Ask a Yu-Gi-Oh rules / card question…"
-        value="What is the ATK of Sky Striker Ace - Raye?">
-      <button class="btn" id="go" disabled>Ask all three</button>
-    </div>
-    <div class="chips" id="chips"></div>
-    <div class="status" id="status">● checking endpoint…</div>
-  </div>
-
-  <div class="cols">
-    <div class="panel sys" id="sysA">
-      <div class="sysh"><span class="dot" style="background:var(--accent-3)"></span>
-        <span class="sysname">A · Base</span><span class="syssub mono">closed book</span></div>
-      <div class="ans ph" data-slot>Ask a question to see the untouched Gemma 2 2B answer.</div>
-    </div>
-    <div class="panel sys" id="sysB">
-      <div class="sysh"><span class="dot" style="background:var(--accent-2)"></span>
-        <span class="sysname">B · Fine-tune</span><span class="syssub mono">closed book</span></div>
-      <div class="ans ph" data-slot>Our QLoRA fine-tune, no retrieval.</div>
-    </div>
-    <div class="panel sys" id="sysC">
-      <div class="sysh"><span class="dot" style="background:var(--accent)"></span>
-        <span class="sysname win">C · Fine-tune + retrieval</span><span class="syssub mono">RAG</span></div>
-      <div class="ans ph" data-slot>Fine-tune with the retriever supplying passages.</div>
-      <div class="pass" id="passC"></div>
-    </div>
-  </div>
-
-  <section class="data">
-    <div class="panel" style="padding:18px 20px">
-      <h2>Leaderboard · reference-grounded judge (/10, n=60)</h2>
-      <table>
-        <thead><tr><th>system</th><th class="n">score</th><th class="n">±SE</th><th>vs. previous</th></tr></thead>
-        <tbody>
-          <tr><td><span class="dot" style="background:var(--accent-3);display:inline-block"></span> A base</td>
-            <td class="n">3.98</td><td class="n">0.39</td><td class="mono" style="text-align:left;color:var(--fg-dim)">—</td></tr>
-          <tr><td><span class="dot" style="background:var(--accent-2);display:inline-block"></span> B fine-tune</td>
-            <td class="n">5.25</td><td class="n">0.54</td><td class="mono sig" style="text-align:left">+1.27 · p=0.007</td></tr>
-          <tr><td><span class="dot" style="background:var(--accent);display:inline-block"></span> C +retrieval</td>
-            <td class="n">8.05</td><td class="n">0.42</td><td class="mono sig" style="text-align:left">+2.80 · p&lt;0.001</td></tr>
-        </tbody>
-      </table>
-      <p class="tag" style="margin-top:12px;letter-spacing:.04em">Both differences significant (paired bootstrap + t + Wilcoxon).</p>
-    </div>
-    <div class="panel" style="padding:18px 20px">
-      <h2>Retriever · recall@k on the 60 held-out</h2>
-      <table>
-        <thead><tr><th>method</th><th class="n">@1</th><th class="n">@3</th><th class="n">@5</th><th class="n">@10</th></tr></thead>
-        <tbody>
-          <tr><td>dense</td><td class="n">0.62</td><td class="n">0.87</td><td class="n">0.92</td><td class="n">0.95</td></tr>
-          <tr><td>BM25</td><td class="n">0.82</td><td class="n">0.85</td><td class="n">0.87</td><td class="n">0.90</td></tr>
-          <tr><td><span class="sig">hybrid</span></td><td class="n">0.72</td><td class="n">0.92</td><td class="n">0.93</td><td class="n">0.95</td></tr>
-        </tbody>
-      </table>
-      <p class="tag" style="margin-top:12px;letter-spacing:.04em">42,412 chunks · hybrid MiniLM-L6 + BM25 · top-5 feeds System C.</p>
+  <section class="sec">
+    <div class="sechead"><span class="tag">The build</span></div>
+    <h2 style="margin:2px 0 2px">One model, three systems</h2>
+    <p class="secsub">Each is the same Gemma 2 2B, changed one step at a time — fine-tune, then add retrieval.
+      Open any one for its own stats, evidence and write-up.</p>
+    <div class="matrix">
+      <a class="mcard" href="https://harman-ygo-base.vercel.app">
+        <div class="mh"><span class="dot" style="background:var(--accent-3)"></span><span class="mname">A · Base</span><span class="mscore">3.98</span></div>
+        <p>Untouched Gemma 2 2B, closed book — the control that confidently fabricates modern card facts.</p>
+        <span class="open">Open site →</span></a>
+      <a class="mcard" href="https://harman-ygo-finetune.vercel.app">
+        <div class="mh"><span class="dot" style="background:var(--accent-2)"></span><span class="mname">B · Fine-tune</span><span class="mscore">5.25</span></div>
+        <p>QLoRA fine-tune, still closed book — learns the answer <em>shape</em>, but not the facts.</p>
+        <span class="open">Open site →</span></a>
+      <a class="mcard" href="https://harman-ygo-rag.vercel.app">
+        <div class="mh"><span class="dot" style="background:var(--accent)"></span><span class="mname win">C · Fine-tune + retrieval</span><span class="mscore">8.05</span></div>
+        <p>The fine-tune with the retriever supplying passages — where the facts arrive. The winner.</p>
+        <span class="open">Open site →</span></a>
     </div>
   </section>
 
-  <section class="hub">
-    <div class="panel" style="padding:18px 20px">
-      <h2 style="font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-muted);margin:0 0 4px;font-weight:600">Explore each system on its own</h2>
-      <p class="sub" style="margin:0">Same live endpoint, one model at a time — each with its own stats, evidence and write-up.</p>
-      <div class="hubgrid">
-        <a class="hubcard" href="https://harman-ygo-base.vercel.app">
-          <div class="hh"><span class="dot" style="background:var(--accent-3)"></span>
-            <span class="sysname">A · Base</span><span class="hs">3.98</span></div>
-          <p>Untouched Gemma 2 2B, closed book — the control that fabricates modern card facts.</p>
-          <span class="open">Open site →</span>
-        </a>
-        <a class="hubcard" href="https://harman-ygo-finetune.vercel.app">
-          <div class="hh"><span class="dot" style="background:var(--accent-2)"></span>
-            <span class="sysname">B · Fine-tune</span><span class="hs">5.25</span></div>
-          <p>QLoRA fine-tune, still closed book — learns the answer shape, not the facts.</p>
-          <span class="open">Open site →</span>
-        </a>
-        <a class="hubcard" href="https://harman-ygo-rag.vercel.app">
-          <div class="hh"><span class="dot" style="background:var(--accent)"></span>
-            <span class="sysname win">C · Fine-tune + retrieval</span><span class="hs">8.05</span></div>
-          <p>The fine-tune with the retriever supplying passages — where the facts arrive. The winner.</p>
-          <span class="open">Open site →</span>
-        </a>
+  <section class="sec">
+    <div class="panel" style="padding:16px 18px">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true"  data-p="arena">Arena</button>
+        <button class="tab" role="tab" aria-selected="false" data-p="board">Leaderboard</button>
+        <button class="tab" role="tab" aria-selected="false" data-p="judge">How the judge works</button>
+        <button class="tab" role="tab" aria-selected="false" data-p="corpus">Corpus</button>
+        <button class="tab" role="tab" aria-selected="false" data-p="cost">Cost</button>
+      </div>
+
+      <!-- ARENA -->
+      <div class="tabpanel active" id="arena">
+        <div class="askhead"><span class="tag">interactive</span><span class="badge" id="badge">checking…</span></div>
+        <div class="askrow">
+          <input id="q" type="text" placeholder="Ask a Yu-Gi-Oh rules / card question…"
+            value="What is the ATK of Sky Striker Ace - Raye?">
+          <button class="btn" id="go" disabled>Ask all three</button>
+        </div>
+        <div class="chips" id="chips"></div>
+        <div class="cols">
+          <div class="panel sys" id="sysA">
+            <div class="sysh"><span class="dot" style="background:var(--accent-3)"></span>
+              <span class="sysname">A · Base</span><span class="syssub mono">closed book</span></div>
+            <div class="ans ph" data-slot>Ask a question to see the untouched Gemma 2 2B answer.</div>
+          </div>
+          <div class="panel sys" id="sysB">
+            <div class="sysh"><span class="dot" style="background:var(--accent-2)"></span>
+              <span class="sysname">B · Fine-tune</span><span class="syssub mono">closed book</span></div>
+            <div class="ans ph" data-slot>Our QLoRA fine-tune, no retrieval.</div>
+          </div>
+          <div class="panel sys" id="sysC">
+            <div class="sysh"><span class="dot" style="background:var(--accent)"></span>
+              <span class="sysname win">C · Fine-tune + retrieval</span><span class="syssub mono">RAG</span></div>
+            <div class="ans ph" data-slot>Fine-tune with the retriever supplying passages.</div>
+            <div class="pass" id="passC"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEADERBOARD -->
+      <div class="tabpanel" id="board">
+        <h3 class="blk" style="margin-top:6px">Reference-grounded judge · /10 · n = 60</h3>
+        <table>
+          <thead><tr><th>System</th><th class="n">Score</th><th class="n">±SE</th>
+            <th class="n">Correct /5</th><th class="n">Complete /2</th><th class="n">Grounded /2</th><th class="n">Clarity /1</th></tr></thead>
+          <tbody>
+            <tr><td><span class="dot" style="background:var(--accent-3);display:inline-block"></span> A base, closed</td>
+              <td class="n">3.98</td><td class="n">0.39</td><td class="n">1.83</td><td class="n">0.97</td><td class="n">0.18</td><td class="n">1.00</td></tr>
+            <tr><td><span class="dot" style="background:var(--accent-2);display:inline-block"></span> B fine-tune, closed</td>
+              <td class="n">5.25</td><td class="n">0.54</td><td class="n">2.35</td><td class="n">1.03</td><td class="n">0.87</td><td class="n">1.00</td></tr>
+            <tr class="win-row"><td><span class="dot" style="background:var(--accent);display:inline-block"></span> C fine-tune + retrieval</td>
+              <td class="n"><b>8.05</b></td><td class="n">0.42</td><td class="n">3.85</td><td class="n">1.55</td><td class="n">1.65</td><td class="n">1.00</td></tr>
+          </tbody>
+        </table>
+        <h3 class="blk">Paired significance · bootstrap 95% CI + t + Wilcoxon</h3>
+        <table>
+          <thead><tr><th>Contrast</th><th class="n">Δ mean</th><th class="n">95% CI</th><th class="n">t p</th><th class="n">Wilcoxon p</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td>A → B &nbsp;<span class="mono" style="color:var(--fg-dim)">fine-tuning</span></td>
+              <td class="n sig">+1.27</td><td class="n">[0.42, 2.17]</td><td class="n">0.007</td><td class="n">0.012</td><td class="sig">significant</td></tr>
+            <tr><td>B → C &nbsp;<span class="mono" style="color:var(--fg-dim)">retrieval</span></td>
+              <td class="n sig">+2.80</td><td class="n">[1.72, 3.87]</td><td class="n">&lt;0.001</td><td class="n">&lt;0.001</td><td class="sig">significant</td></tr>
+          </tbody>
+        </table>
+        <h3 class="blk">Retriever · recall@k on the 60 held-out</h3>
+        <table>
+          <thead><tr><th>Method</th><th class="n">@1</th><th class="n">@3</th><th class="n">@5</th><th class="n">@10</th></tr></thead>
+          <tbody>
+            <tr><td>Dense (MiniLM-L6)</td><td class="n">0.62</td><td class="n">0.87</td><td class="n">0.92</td><td class="n">0.95</td></tr>
+            <tr><td>BM25 (lexical)</td><td class="n">0.82</td><td class="n">0.85</td><td class="n">0.87</td><td class="n">0.90</td></tr>
+            <tr><td><span class="sig">Hybrid (RRF)</span> — feeds C</td><td class="n">0.72</td><td class="n">0.92</td><td class="n"><b>0.93</b></td><td class="n">0.95</td></tr>
+          </tbody>
+        </table>
+        <p class="note" style="margin-top:12px">The gain is concentrated in <b>groundedness</b> (0.18 → 0.87 → 1.65): fine-tuning teaches
+          the shape, retrieval supplies the facts — correctness only jumps (2.35 → 3.85) once real passages are in the prompt.</p>
+      </div>
+
+      <!-- JUDGE -->
+      <div class="tabpanel" id="judge">
+        <h3 class="blk" style="margin-top:6px">A reference-grounded, blind, pointwise judge</h3>
+        <p class="note">Every held-out question ships with a <b>gold answer and its source evidence</b>. The judge
+          (Gemini flash-lite) is handed that reference and grades each answer against it — so the scores are
+          checkable, not vibes. It scores <b>one answer at a time and is never told which system produced it</b>
+          (blind), which removes position and identity bias.</p>
+        <h3 class="blk">The rubric · 10 points</h3>
+        <ul class="rubric">
+          <li><b>Correctness · 5</b> Does the answer match the gold fact? The heaviest weight — this is what separates the systems.</li>
+          <li><b>Completeness · 2</b> Does it cover the whole answer, not just part of it?</li>
+          <li><b>Groundedness · 2</b> Is every claim supported by the evidence? <b>Invented facts force this to 0.</b></li>
+          <li><b>Clarity · 1</b> Is it readable and direct?</li>
+        </ul>
+        <p class="note">Two guardrails make the score honest: groundedness collapses to 0 the moment the model
+          fabricates, and a <b>refusal ("I don't know") beats a confident wrong answer</b> — so bluffing is punished,
+          not rewarded. Systems are then compared with a <b>paired</b> test (same 60 questions each), using a
+          bootstrap 95% CI as the primary signal, cross-checked with a paired t-test and Wilcoxon.</p>
+      </div>
+
+      <!-- CORPUS -->
+      <div class="tabpanel" id="corpus">
+        <h3 class="blk" style="margin-top:6px">What the model was trained on</h3>
+        <p class="note">The fine-tune's supervised set is <b>2,683 grounded QA pairs</b>, distilled by a teacher LLM
+          from a curated Yu-Gi-Oh corpus and filtered through a blind-judge gauntlet. That corpus is two free
+          sources: <b>Yugipedia</b> editorial prose (CC BY-SA 4.0, attributed) and <b>YGOPRODeck</b> card facts.
+          Card effect text is © Konami, used only as labelled fair-use context — never a verbatim-recall target.</p>
+        <h3 class="blk">Corpus split · 27.5 MB across sources</h3>
+        <div class="splitbar" id="splitbar"></div>
+        <div class="legend" id="legend"></div>
+        <table style="margin-top:14px">
+          <thead><tr><th>Source</th><th>Role</th><th>License</th><th class="n">Size</th><th class="n">Share</th></tr></thead>
+          <tbody>
+            <tr><td>Yugipedia · tips</td><td>rulings & interactions</td><td>CC BY-SA 4.0</td><td class="n">8.47 MB</td><td class="n">31%</td></tr>
+            <tr><td>Yugipedia · rulings</td><td>rulings</td><td>CC BY-SA 4.0</td><td class="n">5.90 MB</td><td class="n">22%</td></tr>
+            <tr><td>Yugipedia · archetype</td><td>mechanics</td><td>CC BY-SA 4.0</td><td class="n">2.74 MB</td><td class="n">10%</td></tr>
+            <tr><td>Yugipedia · lore (episode)</td><td>lore</td><td>CC BY-SA 4.0</td><td class="n">2.61 MB</td><td class="n">9%</td></tr>
+            <tr><td>Yugipedia · lore (character)</td><td>lore</td><td>CC BY-SA 4.0</td><td class="n">1.31 MB</td><td class="n">5%</td></tr>
+            <tr><td>Yugipedia · mechanics</td><td>glossary</td><td>CC BY-SA 4.0</td><td class="n">0.40 MB</td><td class="n">1%</td></tr>
+            <tr><td>YGOPRODeck · card facts</td><td>card identity (stats + fair-use effect text)</td><td>free API / © Konami</td><td class="n">6.04 MB</td><td class="n">22%</td></tr>
+          </tbody>
+        </table>
+        <p class="note" style="margin-top:12px"><b>78% free-licensed Yugipedia prose</b> (20.7 MB cleaned, clears the
+          20 MB floor) + <b>22% card facts</b>. Of the prose, ~82% is on-target rulings/interactions and ~18% is
+          lore. Card knowledge is a YGOPRODeck snapshot fetched <b>2026-08-01</b>; cards printed after that are out of scope.</p>
+      </div>
+
+      <!-- COST -->
+      <div class="tabpanel" id="cost">
+        <h3 class="blk" style="margin-top:6px">What this cost to build · ≈ $3 of a $25 budget</h3>
+        <table>
+          <thead><tr><th>Stage</th><th>Detail</th><th class="n">Cost</th></tr></thead>
+          <tbody>
+            <tr><td>Teacher QA generation</td><td>Gemini flash-lite · pilot + 1,200 chunks → 2,796 pairs</td><td class="n">&lt; $0.70</td></tr>
+            <tr><td>QA quality gating</td><td>blind judge over 2,796 pairs → 2,683 kept</td><td class="n">&lt; $0.50</td></tr>
+            <tr><td>QLoRA fine-tune</td><td>Gemma 2 2B · 2 runs (overfit + early-stop) on Modal L4</td><td class="n">&lt; $0.60</td></tr>
+            <tr><td>Evaluation</td><td>reference-grounded judge · 180 answers (A/B/C × 60)</td><td class="n">&lt; $0.30</td></tr>
+            <tr><td>Retriever + serving + eval</td><td>MiniLM + FAISS + BM25 on a local RTX 3060</td><td class="n">$0</td></tr>
+            <tr class="win-row"><td style="font-weight:600">Total</td><td></td><td class="n"><b>≈ $3.00</b></td></tr>
+          </tbody>
+        </table>
+        <p class="note" style="margin-top:12px">Figures are Modal GPU usage (time × rate) plus Gemini API calls
+          (~9k total). The base model is Google's, imported free; training, retrieval and serving run on the local
+          GPU, so the only real spend is a little L4 time and a lot of cheap teacher/judge calls.</p>
       </div>
     </div>
   </section>
 
-  <div class="hairline" style="margin:34px 0 18px"></div>
   <footer>
+    <div class="grad-divider"></div>
     Live against real endpoints — every answer is generated on request, every number is from our own
-    evaluation. Model:
-    <a href="https://huggingface.co/Ace-2504/gemma-2-2b-yugioh-qa" target="_blank" rel="noopener">Ace-2504/gemma-2-2b-yugioh-qa</a>.
-    Base fabricates card facts; retrieval supplies them — that is the whole experiment.
+    evaluation. <a href="https://huggingface.co/Ace-2504/gemma-2-2b-yugioh-qa" target="_blank" rel="noopener">Model on HuggingFace</a>
+    · <a href="https://github.com/Ace-2504/ygo-slms" target="_blank" rel="noopener">Source on GitHub</a>
+    <div style="margin-top:8px">Built &amp; evaluated by Harman Sandhu</div>
   </footer>
 </div>
 
 <script>
-  // ---- endpoint (update if the tunnel restarts) ----
   const ENDPOINT = "https://wheat-rangers-leo-ranks.trycloudflare.com/ask";
   const EXAMPLES = [
     "What is the ATK of Sky Striker Ace - Raye?",
@@ -233,62 +364,70 @@
     "Can you activate a normal Spell in the Damage Step?",
     "What two monster types make up the Kozmo archetype?"
   ];
+  // corpus split for the bar: [label, pct, colorvar]
+  const SPLIT = [["tips",31,"--accent"],["rulings",22,"--accent-2"],["card facts",22,"--accent-3"],
+    ["archetype",10,"#e0b341"],["lore ep",9,"#8a8f98"],["lore char",5,"#6b7280"],["mechanics",1,"#c05a3a"]];
 
-  // theme picker (persisted, no-flash handled by the data-theme on <html>)
-  const root = document.documentElement, sw = document.getElementById('sw');
-  function setTheme(t){ root.setAttribute('data-theme', t); localStorage.setItem('ygo-theme', t);
+  const root=document.documentElement, sw=document.getElementById('sw');
+  function setTheme(t){ root.setAttribute('data-theme',t); localStorage.setItem('ygo-theme',t);
     [...sw.children].forEach(b=>b.setAttribute('aria-pressed', b.dataset.t===t)); }
   sw.addEventListener('click', e=>{ const b=e.target.closest('.sw'); if(b) setTheme(b.dataset.t); });
-  setTheme(localStorage.getItem('ygo-theme') || 'cobalt');
+  setTheme(localStorage.getItem('ygo-theme') || 'parchment');
 
-  // example chips
-  const chips = document.getElementById('chips'), qEl = document.getElementById('q');
+  // tabs
+  const tabs=[...document.querySelectorAll('.tab')];
+  tabs.forEach(t=>t.onclick=()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===t));
+    document.querySelectorAll('.tabpanel').forEach(p=>p.classList.toggle('active', p.id===t.dataset.p));
+  });
+
+  // corpus split bar
+  const sb=document.getElementById('splitbar'), lg=document.getElementById('legend');
+  SPLIT.forEach(([lab,pct,c])=>{
+    const col = c.startsWith('--') ? `var(${c})` : c;
+    const s=document.createElement('span'); s.style.width=pct+'%'; s.style.background=col; s.title=`${lab} · ${pct}%`; sb.appendChild(s);
+    const li=document.createElement('span'); li.innerHTML=`<i style="background:${col}"></i>${lab} ${pct}%`; lg.appendChild(li);
+  });
+
+  // ask
+  const chips=document.getElementById('chips'), qEl=document.getElementById('q'), badge=document.getElementById('badge');
   EXAMPLES.forEach(x=>{ const c=document.createElement('button'); c.className='chip'; c.textContent=x;
-    c.onclick=()=>{ qEl.value=x; ask(); }; chips.appendChild(c); });
-
-  const slot = id => document.querySelector('#'+id+' [data-slot]');
-  function setAns(id, text, win){ const s=slot(id); s.className='ans'+(win?' win':''); s.textContent=text; }
+    c.onclick=()=>{ qEl.value=x; if(ONLINE) ask(); }; chips.appendChild(c); });
+  const slot=id=>document.querySelector('#'+id+' [data-slot]');
+  function setAns(id,text,win){ const s=slot(id); s.className='ans'+(win?' win':''); s.textContent=text; }
   function loading(id){ const s=slot(id); s.className='ans ph'; s.textContent='…thinking'; }
 
-  // ---- endpoint availability: probe on load, gate the button, show status ----
-  const statusEl = document.getElementById('status');
-  let ONLINE = false;
+  let ONLINE=false;
   function setStatus(ok){
-    ONLINE = ok; document.getElementById('go').disabled = !ok;
-    statusEl.innerHTML = ok
-      ? '<span class="live">● live</span> · answers are generated on request against the real endpoint'
-      : '<span class="down">● demo unavailable</span> — the local model server / tunnel is not reachable right now';
-    if(!ok) ['sysA','sysB','sysC'].forEach(id=>setAns(id,'Demo unavailable — endpoint unreachable.'));
+    ONLINE=ok; document.getElementById('go').disabled=!ok;
+    badge.className='badge '+(ok?'live':'down'); badge.textContent = ok?'live':'demo unavailable';
+    if(!ok) ['sysA','sysB','sysC'].forEach(id=>setAns(id,'Demo unavailable — the local model server / tunnel is not reachable right now.'));
   }
   async function probe(){
     try{ await fetch(ENDPOINT.replace(/\/ask$/,'/'), {method:'GET', signal:AbortSignal.timeout(6000)}); setStatus(true); }
     catch(e){ setStatus(false); }
   }
-
   async function ask(){
-    const q = qEl.value.trim(); if(!q || !ONLINE) return;
-    const btn = document.getElementById('go'); btn.disabled=true;
+    const q=qEl.value.trim(); if(!q||!ONLINE) return;
+    const btn=document.getElementById('go'); btn.disabled=true;
     ['sysA','sysB','sysC'].forEach(loading); document.getElementById('passC').innerHTML='';
     try{
-      const r = await fetch(ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({question:q, k:5})});
+      const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({question:q,k:5}),signal:AbortSignal.timeout(120000)});
       if(!r.ok) throw new Error('HTTP '+r.status);
-      const d = await r.json();
-      setAns('sysA', d.A); setAns('sysB', d.B); setAns('sysC', d.C, true);
-      const pc = document.getElementById('passC');
+      const d=await r.json();
+      setAns('sysA',d.A); setAns('sysB',d.B); setAns('sysC',d.C,true);
+      const pc=document.getElementById('passC');
       if(d.passages && d.passages.length){
-        pc.innerHTML = '<details open><summary>▸ '+d.passages.length+' retrieved passages</summary></details>';
-        const det = pc.querySelector('details');
+        pc.innerHTML='<details open><summary style="cursor:pointer;color:var(--fg-muted);font-size:12px">▸ '+d.passages.length+' retrieved passages</summary></details>';
+        const det=pc.querySelector('details');
         d.passages.forEach(p=>{ const el=document.createElement('div'); el.className='p';
-          el.innerHTML='<span class="pt">'+p.title+'</span><br>'+p.text.slice(0,220).replace(/</g,'&lt;')+'…';
-          det.appendChild(el); });
+          el.innerHTML='<span class="pt">'+p.title+'</span><br>'+p.text.slice(0,220).replace(/</g,'&lt;')+'…'; det.appendChild(el); });
       }
-    }catch(err){
-      setStatus(false);
-      console.error(err);
-    }finally{ btn.disabled = !ONLINE; }
+    }catch(err){ setStatus(false); console.error(err); }
+    finally{ btn.disabled=!ONLINE; }
   }
-  document.getElementById('go').onclick = ask;
+  document.getElementById('go').onclick=ask;
   qEl.addEventListener('keydown', e=>{ if(e.key==='Enter') ask(); });
   probe();
 </script>
